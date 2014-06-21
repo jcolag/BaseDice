@@ -91,67 +91,7 @@ namespace BaseDice
 
                         if (this.point == 0)
                         {
-                                if (roll[0] == roll[1])
-                                {
-                                        this.bases[2].Advance();
-                                        this.bases[1].Advance();
-                                        this.bases[0].Advance();
-                                        this.bases[0].Land();
-                                        ++this.hits;
-                                        report = "Advance all bases";
-                                }
-                                else if (rollTotal == 3)
-                                {
-                                        this.bases[0].Land();
-                                        if (this.bases[2].Advance())
-                                        {
-                                                report = "Advance to home";
-                                        }
-                                        else
-                                        {
-                                                report = "Single";
-                                        }
-                                }
-                                else if (new List<int>() { 4, 5, 9, 10 }.Contains(rollTotal))
-                                {
-                                        if (this.bases[0].Advance())
-                                        {
-                                                report = "Advance to second";
-                                        }
-                                        else
-                                        {
-                                                report = "Single";
-                                        }
-
-                                        this.bases[0].Land();
-                                }
-                                else if (rollTotal == 6 || rollTotal == 8)
-                                {
-                                        if (this.bases[1].Advance())
-                                        {
-                                                report = "Advance to third";
-                                        }
-                                        else
-                                        {
-                                                report = "Single";
-                                        }
-
-                                        this.bases[0].Land();
-                                }
-                                else if (rollTotal == 7)
-                                {
-                                        ++this.outs;
-                                        report = "Out";
-                                }
-                                else if (rollTotal == 11)
-                                {
-                                        ++this.outs;
-                                        report = "Non-at-bat out";
-                                }
-                                else
-                                {
-                                        throw new Exception("Missed a roll - point off! " + rollTotal.ToString());
-                                }
+                                report = this.TurnNoPoint(roll);
 
                                 this.point = rollTotal;
                                 report = "the point is " + this.point.ToString() + ", " + report;
@@ -160,128 +100,14 @@ namespace BaseDice
                         {
                                 if (rollTotal == this.point)
                                 {
-                                        if (new List<int>() { 2, 3, 7, 11, 12 }.Contains(rollTotal))
-                                        {
-                                                // Do nothing
-                                        }
-                                        else if (roll[0] == 5 && roll[1] == 5)
-                                        {
-                                                this.bases[0].Land();
-                                                this.bases[0].Advance();
-                                                this.bases[1].Advance();
-                                                ++this.hits;
-                                                report = "Triple";
-                                        }
-                                        else if (roll[0] == 3 && roll[1] == 3)
-                                        {
-                                                this.bases[0].Error();
-                                                ++this.errors;
-                                                report = "Error";
-                                        }
-                                        else if (roll[0] == roll[1])
-                                        {
-                                                this.bases[0].Land();
-                                                ++this.errors;
-                                                report = "Error";
-                                        }
-                                        else if (rollTotal == 5)
-                                        {
-                                                this.bases[0].Land();
-                                                this.bases[0].Advance();
-                                                ++this.hits;
-                                                report = "Double (standard)";
-                                        }
-                                        else if (new List<int>() { 4, 6, 10 }.Contains(rollTotal))
-                                        {
-                                                this.bases[0].Land();
-                                                ++this.hits;
-                                                report = "Single (standard)";
-                                        }
-                                        else if (rollTotal == 8)
-                                        {
-                                                this.bases[0].Land();
-                                                this.bases[0].Advance();
-                                                this.bases[1].Advance();
-                                                this.bases[2].Advance();
-                                                ++this.hits;
-                                                report = "Home Run";
-                                        }
-                                        else if (rollTotal == 9)
-                                        {
-                                                this.bases[0].Land();
-                                                this.bases[0].Advance();
-                                                ++this.hits;
-                                                report = "Double (strong)";
-                                        }
-                                        else
-                                        {
-                                                throw new Exception("Missed a roll - made the point! " +
-                                                                    rollTotal.ToString());
-                                        }
-
+                                        report = this.TurnPointMatched(roll);
                                         this.point = 0;
                                 }
 
-                                if (rollTotal == 2)
+                                string report2 = this.TurnWithPoint(roll);
+                                if (!string.IsNullOrWhiteSpace(report))
                                 {
-                                        if (this.bases[1].Out())
-                                        {
-                                                ++this.outs;
-                                                report = "Eliminate player on second";
-                                        }
-                                        else
-                                        {
-                                                report = "Thrown to second";
-                                        }
-                                }
-                                else if (rollTotal == 3)
-                                {
-                                        if (this.bases[2].Out())
-                                        {
-                                                ++this.outs;
-                                                report = "Eliminate player on third";
-                                        }
-                                        else
-                                        {
-                                                report = "Thrown to third";
-                                        }
-                                }
-                                else if (new List<int>() { 4, 5, 6, 8, 9, 10 }.Contains(rollTotal))
-                                {
-                                        ++this.outs;
-                                        report = "Out";
-                                }
-                                else if (rollTotal == 7)
-                                {
-                                        report = "Roll again";
-                                }
-                                else if (rollTotal == 11)
-                                {
-                                        this.bases[0].Land();
-                                        report = "Walk";
-                                }
-                                else if (rollTotal == 12)
-                                {
-                                        if (this.bases[0].Out())
-                                        {
-                                                report = "Eliminate man first";
-                                                ++this.outs;
-                                        }
-                                        else
-                                        {
-                                                report = "Thrown to first";
-                                        }
-                                }
-                                else if (roll[0] == roll[1])
-                                {
-                                        this.bases[0].Land();
-                                        ++this.hits;
-                                        report = "Single (strong)";
-                                }
-                                else
-                                {
-                                        throw new Exception("Missed a roll - point on! " +
-                                                            rollTotal.ToString());
+                                        report += "\n" + report2;
                                 }
                         }
 
@@ -315,9 +141,9 @@ namespace BaseDice
                 {
                         return this.runs.ToString() + " runs.  " +
                                 this.hits.ToString() + " hits.  " +
-                                this.errors.ToString() + " errors.";
+                                        this.errors.ToString() + " errors.";
                 }
-                
+
                 /// <summary>
                 /// Translates the roll to crap-ese.
                 /// </summary>
@@ -329,42 +155,277 @@ namespace BaseDice
                         string res = string.Empty;
                         switch (roll)
                         {
-                        case 2:
+                                case 2:
                                 res = "Snake Eyes";
                                 break;
-                        case 3:
+                                case 3:
                                 res = "Ace Deuce";
                                 break;
-                        case 4:
+                                case 4:
                                 res = equal ? "Hard" : "Soft" + " Four";
                                 break;
-                        case 5:
+                                case 5:
                                 res = "Fever";
                                 break;
-                        case 6:
+                                case 6:
                                 res = equal ? "Hard" : "Soft" + " Six";
                                 break;
-                        case 7:
+                                case 7:
                                 res = "Natural";
                                 break;
-                        case 8:
+                                case 8:
                                 res = equal ? "Hard" : "Soft" + " Eight";
                                 break;
-                        case 9:
+                                case 9:
                                 res = "Nina";
                                 break;
-                        case 10:
+                                case 10:
                                 res = equal ? "Hard" : "Soft" + " Ten";
                                 break;
-                        case 11:
+                                case 11:
                                 res = "Yo";
                                 break;
-                        case 12:
+                                case 12:
                                 res = "Boxcars";
                                 break;
                         }
 
                         return res;
+                }
+
+                /// <summary>
+                /// Takes the turns with the point not set.
+                /// </summary>
+                /// <returns>The resulting report.</returns>
+                /// <param name="roll">The roll.</param>
+                private string TurnNoPoint(List<int> roll)
+                {
+                        int rollTotal = 0;
+                        string report = string.Empty;
+
+                        foreach (int val in roll)
+                        {
+                                rollTotal += val;
+                        }
+
+                        if (roll[0] == roll[1])
+                        {
+                                this.bases[2].Advance();
+                                this.bases[1].Advance();
+                                this.bases[0].Advance();
+                                this.bases[0].Land();
+                                ++this.hits;
+                                report = "Advance all bases";
+                        }
+                        else if (rollTotal == 3)
+                        {
+                                this.bases[0].Land();
+                                if (this.bases[2].Advance())
+                                {
+                                        report = "Advance to home";
+                                }
+                                else
+                                {
+                                        report = "Single";
+                                }
+                        }
+                        else if (new List<int>() { 4, 5, 9, 10 }.Contains(rollTotal))
+                        {
+                                if (this.bases[0].Advance())
+                                {
+                                        report = "Advance to second";
+                                }
+                                else
+                                {
+                                        report = "Single";
+                                }
+
+                                this.bases[0].Land();
+                        }
+                        else if (rollTotal == 6 || rollTotal == 8)
+                        {
+                                if (this.bases[1].Advance())
+                                {
+                                        report = "Advance to third";
+                                }
+                                else
+                                {
+                                        report = "Single";
+                                }
+
+                                this.bases[0].Land();
+                        }
+                        else if (rollTotal == 7)
+                        {
+                                ++this.outs;
+                                report = "Out";
+                        }
+                        else if (rollTotal == 11)
+                        {
+                                ++this.outs;
+                                report = "Non-at-bat out";
+                        }
+                        else
+                        {
+                                throw new Exception("Missed a roll - point off! " + rollTotal.ToString());
+                        }
+
+                        return report;
+                }
+
+                /// <summary>
+                /// Take the turn when the point has been matched.
+                /// </summary>
+                /// <returns>The report.</returns>
+                /// <param name="roll">The roll.</param>
+                private string TurnPointMatched(List<int> roll)
+                {
+                        int rollTotal = 0;
+                        string report = string.Empty;
+
+                        foreach (int val in roll)
+                        {
+                                rollTotal += val;
+                        }
+
+                        if (new List<int>() { 2, 3, 7, 11, 12 }.Contains(rollTotal))
+                        {
+                                // Do nothing
+                        }
+                        else if (roll[0] == 5 && roll[1] == 5)
+                        {
+                                this.bases[0].Land();
+                                this.bases[0].Advance();
+                                this.bases[1].Advance();
+                                ++this.hits;
+                                report = "Triple";
+                        }
+                        else if (roll[0] == 3 && roll[1] == 3)
+                        {
+                                this.bases[0].Error();
+                                ++this.errors;
+                                report = "Error";
+                        }
+                        else if (roll[0] == roll[1])
+                        {
+                                this.bases[0].Land();
+                                ++this.errors;
+                                report = "Error";
+                        }
+                        else if (rollTotal == 5)
+                        {
+                                this.bases[0].Land();
+                                this.bases[0].Advance();
+                                ++this.hits;
+                                report = "Double (standard)";
+                        }
+                        else if (new List<int>() { 4, 6, 10 }.Contains(rollTotal))
+                        {
+                                this.bases[0].Land();
+                                ++this.hits;
+                                report = "Single (standard)";
+                        }
+                        else if (rollTotal == 8)
+                        {
+                                this.bases[0].Land();
+                                this.bases[0].Advance();
+                                this.bases[1].Advance();
+                                this.bases[2].Advance();
+                                ++this.hits;
+                                report = "Home Run";
+                        }
+                        else if (rollTotal == 9)
+                        {
+                                this.bases[0].Land();
+                                this.bases[0].Advance();
+                                ++this.hits;
+                                report = "Double (strong)";
+                        }
+                        else
+                        {
+                                throw new Exception("Missed a roll - made the point! " + rollTotal.ToString());
+                        }
+
+                        return report;
+                }
+
+                /// <summary>
+                /// Takes the turn with a point to meet.
+                /// </summary>
+                /// <returns>The report.</returns>
+                /// <param name="roll">The roll.</param>
+                private string TurnWithPoint(List<int> roll)
+                {
+                        int rollTotal = 0;
+                        string report = string.Empty;
+
+                        foreach (int val in roll)
+                        {
+                                rollTotal += val;
+                        }
+
+                        if (rollTotal == 2)
+                        {
+                                if (this.bases[1].Out())
+                                {
+                                        ++this.outs;
+                                        report = "Eliminate player on second";
+                                }
+                                else
+                                {
+                                        report = "Thrown to second";
+                                }
+                        }
+                        else if (rollTotal == 3)
+                        {
+                                if (this.bases[2].Out())
+                                {
+                                        ++this.outs;
+                                        report = "Eliminate player on third";
+                                }
+                                else
+                                {
+                                        report = "Thrown to third";
+                                }
+                        }
+                        else if (new List<int>() { 4, 5, 6, 8, 9, 10 }.Contains(rollTotal))
+                        {
+                                ++this.outs;
+                                report = "Out";
+                        }
+                        else if (rollTotal == 7)
+                        {
+                                report = "Roll again";
+                        }
+                        else if (rollTotal == 11)
+                        {
+                                this.bases[0].Land();
+                                report = "Walk";
+                        }
+                        else if (rollTotal == 12)
+                        {
+                                if (this.bases[0].Out())
+                                {
+                                        report = "Eliminate man first";
+                                        ++this.outs;
+                                }
+                                else
+                                {
+                                        report = "Thrown to first";
+                                }
+                        }
+                        else if (roll[0] == roll[1])
+                        {
+                                this.bases[0].Land();
+                                ++this.hits;
+                                report = "Single (strong)";
+                        }
+                        else
+                        {
+                                throw new Exception("Missed a roll - point on! " + rollTotal.ToString());
+                        }
+
+                        return report;
                 }
 
                 /// <summary>
