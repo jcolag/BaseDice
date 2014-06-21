@@ -38,3 +38,19 @@ It definitely works in MonoDevelop. It almost certainly works in SharpDevelop. I
 
 Obviously, that needs testing.
 
+Future
+------
+
+Among other things...
+
+ - [ ] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.
+
+ - [ ] Separating the output into innings might be nice, though scores seem very low as it is.
+
+ - [ ] Interactivity.  Of some sort.
+
+ - [ ] Web interface.
+
+ - [ ] Some way of distinguishing good teams/players from bad, possibly related to interactivity, somehow.
+
+ - [ ] Change the rules to better fit the Craps paradigm.  As mentioned, I don't know much about either game, but I'm still uncomfortable with crapping out advancing all the runners on bases.
