@@ -93,7 +93,6 @@ namespace BaseDice
                         if (this.point == 0)
                         {
                                 report = this.TurnNoPoint(roll);
-
                                 this.point = rollTotal;
                                 report = "the point is " + this.point.ToString() + ", " + report;
                         }
@@ -106,9 +105,13 @@ namespace BaseDice
                                 }
 
                                 string report2 = this.TurnWithPoint(roll);
-                                if (!string.IsNullOrWhiteSpace(report))
+                                if (!string.IsNullOrWhiteSpace(report) && !string.IsNullOrWhiteSpace(report2))
                                 {
                                         report += nl + report2;
+                                }
+                                else if (!string.IsNullOrWhiteSpace(report2))
+                                {
+                                        report = report2;
                                 }
                         }
 
@@ -294,6 +297,7 @@ namespace BaseDice
                         if (new List<int>() { 2, 3, 7, 11, 12 }.Contains(rollTotal))
                         {
                                 // Do nothing
+                                report = "Matched the point";
                         }
                         else if (roll[0] == 5 && roll[1] == 5)
                         {
