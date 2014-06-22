@@ -25,3 +25,5 @@ using System.Runtime.CompilerServices;
 // if desired. See the Mono documentation for more information about signing.
 // [assembly: AssemblyDelaySign(false)]
 // [assembly: AssemblyKeyFile("")]
+[assembly: System.CLSCompliant (true)]
+[assembly: System.Runtime.InteropServices.ComVisible (false)]

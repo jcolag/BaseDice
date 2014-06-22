@@ -30,32 +30,32 @@ namespace BaseDice
                 /// <summary>
                 /// The point.
                 /// </summary>
-                private int point = 0;
+                private int point;
 
                 /// <summary>
                 /// The number of outs.
                 /// </summary>
-                private int outs = 0;
+                private int outs;
 
                 /// <summary>
                 /// The player's score.
                 /// </summary>
-                private int runs = 0;
+                private int runs;
 
                 /// <summary>
                 /// The number of hits.
                 /// </summary>
-                private int hits = 0;
+                private int hits;
 
                 /// <summary>
                 /// The number of errors.
                 /// </summary>
-                private int errors = 0;
+                private int errors;
 
                 /// <summary>
                 /// The number of runners to cross home that haven't otherwise been processed.
                 /// </summary>
-                private int home = 0;
+                private int home;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Game"/> class.
@@ -83,6 +83,7 @@ namespace BaseDice
                         int rollTotal = 0;
                         List<int> roll = this.Roll();
                         string report = string.Empty;
+                        string nl = Environment.NewLine;
 
                         foreach (int val in roll)
                         {
@@ -107,7 +108,7 @@ namespace BaseDice
                                 string report2 = this.TurnWithPoint(roll);
                                 if (!string.IsNullOrWhiteSpace(report))
                                 {
-                                        report += "\n" + report2;
+                                        report += nl + report2;
                                 }
                         }
 
@@ -116,7 +117,8 @@ namespace BaseDice
                         {
                                 runners = this.home.ToString() + " runner" +
                                         (this.home == 1 ? string.Empty : "s") +
-                                        " cross Home Plate.\n";
+                                        " cross" + (this.home == 1 ? "es" : string.Empty) +
+                                                " Home Plate." + nl;
                                 this.home = 0;
                         }
 
@@ -162,25 +164,25 @@ namespace BaseDice
                                 res = "Ace Deuce";
                                 break;
                                 case 4:
-                                res = equal ? "Hard" : "Soft" + " Four";
+                                res = (equal ? "Hard" : "Soft") + " Four";
                                 break;
                                 case 5:
                                 res = "Fever";
                                 break;
                                 case 6:
-                                res = equal ? "Hard" : "Soft" + " Six";
+                                res = (equal ? "Hard" : "Soft") + " Six";
                                 break;
                                 case 7:
                                 res = "Natural";
                                 break;
                                 case 8:
-                                res = equal ? "Hard" : "Soft" + " Eight";
+                                res = (equal ? "Hard" : "Soft") + " Eight";
                                 break;
                                 case 9:
                                 res = "Nina";
                                 break;
                                 case 10:
-                                res = equal ? "Hard" : "Soft" + " Ten";
+                                res = (equal ? "Hard" : "Soft") + " Ten";
                                 break;
                                 case 11:
                                 res = "Yo";
@@ -267,7 +269,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new Exception("Missed a roll - point off! " + rollTotal.ToString());
+                                throw new ArgumentOutOfRangeException("roll",
+                                        "Missed a roll - point off! " + rollTotal.ToString());
                         }
 
                         return report;
@@ -343,7 +346,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new Exception("Missed a roll - made the point! " + rollTotal.ToString());
+                                throw new ArgumentOutOfRangeException("roll",
+                                        "Missed a roll - made the point! " + rollTotal.ToString());
                         }
 
                         return report;
@@ -422,7 +426,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new Exception("Missed a roll - point on! " + rollTotal.ToString());
+                                throw new ArgumentOutOfRangeException("roll",
+                                        "Missed a roll - point on! " + rollTotal.ToString());
                         }
 
                         return report;

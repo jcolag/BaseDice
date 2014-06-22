@@ -14,17 +14,17 @@ namespace BaseDice
                 /// <summary>
                 /// The next base.
                 /// </summary>
-                private Base nextBase = null;
+                private Base nextBase;
 
                 /// <summary>
                 /// The base is occupied?
                 /// </summary>
-                private bool occupied = false;
+                private bool occupied;
 
                 /// <summary>
                 /// The run callback.
                 /// </summary>
-                private CallbackFunction run = null;
+                private Action run;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Base"/> class.
@@ -34,11 +34,6 @@ namespace BaseDice
                 {
                         this.nextBase = next;
                 }
-
-                /// <summary>
-                /// Callback function.
-                /// </summary>
-                public delegate void CallbackFunction();
 
                 /// <summary>
                 /// Advance the player to the next base.
@@ -107,7 +102,7 @@ namespace BaseDice
                 /// Sets the callback for landing on the base.
                 /// </summary>
                 /// <param name="callback">The callback function.</param>
-                public void SetRun(CallbackFunction callback)
+                public void SetRun(Action callback)
                 {
                         this.run = callback;
                 }

@@ -9,13 +9,12 @@ namespace BaseDice
         /// <summary>
         /// Main class.
         /// </summary>
-        public class MainClass
+        public static class MainClass
         {
                 /// <summary>
                 /// The entry point of the program, where the program control starts and ends.
                 /// </summary>
-                /// <param name="args">The command-line arguments.</param>
-                public static void Main(string[] args)
+                private static void Main()
                 {
                         Game g = new Game();
                         string s = string.Empty;

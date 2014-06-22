@@ -19,12 +19,12 @@ namespace BaseDice
                 /// <summary>
                 /// The random number generator.
                 /// </summary>
-                private Random rand = null;
+                private Random rand;
 
                 /// <summary>
                 /// The value.
                 /// </summary>
-                private int value = 0;
+                private int value;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Die"/> class.
