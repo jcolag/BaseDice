@@ -272,7 +272,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new ArgumentOutOfRangeException("roll",
+                                throw new ArgumentOutOfRangeException(
+                                        "roll",
                                         "Missed a roll - point off! " + rollTotal.ToString());
                         }
 
@@ -350,7 +351,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new ArgumentOutOfRangeException("roll",
+                                throw new ArgumentOutOfRangeException(
+                                        "roll",
                                         "Missed a roll - made the point! " + rollTotal.ToString());
                         }
 
@@ -430,7 +432,8 @@ namespace BaseDice
                         }
                         else
                         {
-                                throw new ArgumentOutOfRangeException("roll",
+                                throw new ArgumentOutOfRangeException(
+                                        "roll",
                                         "Missed a roll - point on! " + rollTotal.ToString());
                         }
 
