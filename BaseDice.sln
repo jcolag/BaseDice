@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDice", "BaseDice\BaseDice.csproj", "{3EF638CD-8CA4-4478-B277-66D63A4A74A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceWeb", "DiceWeb\DiceWeb.csproj", "{4CB29984-3827-47BA-BF72-6142CB33218E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{3EF638CD-8CA4-4478-B277-66D63A4A74A0}.Debug|x86.Build.0 = Debug|x86
 		{3EF638CD-8CA4-4478-B277-66D63A4A74A0}.Release|x86.ActiveCfg = Release|x86
 		{3EF638CD-8CA4-4478-B277-66D63A4A74A0}.Release|x86.Build.0 = Release|x86
+		{4CB29984-3827-47BA-BF72-6142CB33218E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CB29984-3827-47BA-BF72-6142CB33218E}.Debug|x86.Build.0 = Debug|Any CPU
+		{4CB29984-3827-47BA-BF72-6142CB33218E}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CB29984-3827-47BA-BF72-6142CB33218E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = BaseDice\BaseDice.csproj
