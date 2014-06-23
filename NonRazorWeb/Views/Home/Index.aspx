@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div>
-		<%= Html.Encode(ViewData["Message"]) %>
+		<%= ViewData["Message"] %>
 	</div>
 </body>
 
