@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using BaseDice;
-
+﻿// <copyright file="HomeController.cs" company="John Colagioia">
+//     John.Colagioia.net. Licensed under the GPLv3
+// </copyright>
+// <author>John Colagioia</author>
 namespace NonRazorWeb.Controllers
 {
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Web;
+        using System.Web.Mvc;
+        using System.Web.Mvc.Ajax;
+        using BaseDice;
+
+        /// <summary>
+        /// Home controller.
+        /// </summary>
         public class HomeController : Controller
         {
+                /// <summary>
+                /// Controller for the front page.
+                /// </summary>
+                /// <returns>The view.</returns>
                 public ActionResult Index()
                 {
                         Game g = new Game();
@@ -27,9 +38,8 @@ namespace NonRazorWeb.Controllers
 
                         html += g.FinalTally();
 
-                        ViewData["Message"] = html;
-                        return View();
+                        this.ViewData["Message"] = html;
+                        return this.View();
                 }
         }
 }
-
