@@ -18,7 +18,7 @@ namespace BaseDice
                 {
                         Game g = new Game();
                         string s = string.Empty;
-                        while (g.Done())
+                        while (!g.Done())
                         {
                                 s = g.TakeTurn();
                                 if (!string.IsNullOrWhiteSpace(s))

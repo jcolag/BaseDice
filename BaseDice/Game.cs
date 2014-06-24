@@ -135,7 +135,7 @@ namespace BaseDice
                 /// <returns>True if the game still has outs remaining.</returns>
                 public bool Done()
                 {
-                        return this.outs < 27;
+                        return this.outs >= 27;
                 }
 
                 /// <summary>
