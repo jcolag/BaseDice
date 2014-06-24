@@ -144,9 +144,12 @@ namespace BaseDice
                 /// <returns>The tally.</returns>
                 public string FinalTally()
                 {
-                        return this.runs.ToString() + " runs.  " +
-                                this.hits.ToString() + " hits.  " +
-                                        this.errors.ToString() + " errors.";
+                        return this.runs.ToString() + " run" +
+                                (this.runs == 1 ? "" : "s") + ".  " +
+                                this.hits.ToString() + " hit" +
+                                (this.hits == 1 ? "" : "s") + ".  " +
+                                this.errors.ToString() + " error" +
+                                (this.errors == 1 ? "" : "s") + ".";
                 }
 
                 /// <summary>
