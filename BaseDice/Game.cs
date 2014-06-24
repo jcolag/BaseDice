@@ -233,6 +233,8 @@ namespace BaseDice
                                 {
                                         report = "Single";
                                 }
+
+                                ++this.hits;
                         }
                         else if (new List<int>() { 4, 5, 9, 10 }.Contains(rollTotal))
                         {
@@ -246,6 +248,7 @@ namespace BaseDice
                                 }
 
                                 this.bases[0].Land();
+                                ++this.hits;
                         }
                         else if (rollTotal == 6 || rollTotal == 8)
                         {
@@ -259,6 +262,7 @@ namespace BaseDice
                                 }
 
                                 this.bases[0].Land();
+                                ++this.hits;
                         }
                         else if (rollTotal == 7)
                         {
