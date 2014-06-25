@@ -2,6 +2,10 @@
 //     John.Colagioia.net. Licensed under the GPLv3
 // </copyright>
 // <author>John Colagioia</author>
+[assembly: System.Reflection.AssemblyVersion("1.0.*")]
+[assembly: System.CLSCompliant(true)]
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
+
 namespace NonRazorWeb.Controllers
 {
         using System;
@@ -23,31 +27,38 @@ namespace NonRazorWeb.Controllers
                 /// <returns>The view.</returns>
                 public ActionResult Index()
                 {
+                        HttpSessionStateBase session = this.Session;
                         Game g = new Game();
                         string s = string.Empty;
                         string html = string.Empty;
                         bool done = false;
+                        string nl = Environment.NewLine;
 
-                        html = "<h1>Play ball&hellip;!</h1>\n";
-                        this.Session.Add("Game", g);
-                        this.Session.Add("Done", done);
+                        if (session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
+                        html = "<h1>Play ball&hellip;!</h1>" + nl;
+                        session.Add("Game", g);
+                        session.Add("Done", done);
 
                         while (!done)
                         {
                                 s = this.ShowNextPlay(null);
                                 if (!string.IsNullOrWhiteSpace(s))
                                 {
-                                        html += s.Replace(Environment.NewLine, "<br>") + "<br>\n";
+                                        html += s.Replace(nl, "<br>") + "<br>" + nl;
                                 }
 
-                                if (this.Session["Done"] != null)
+                                if (session["Done"] != null)
                                 {
-                                        done = (bool)this.Session["Done"];
+                                        done = (bool)session["Done"];
                                 }
                         }
 
                         this.ViewData["Message"] = html;
-                        this.Session.Add("Html", html);
+                        session.Add("Html", html);
                         return this.View();
                 }
 
@@ -58,22 +69,23 @@ namespace NonRazorWeb.Controllers
                 /// <param name="game">The game component.</param>
                 private string ShowNextPlay(Game game)
                 {
+                        HttpSessionStateBase session = this.Session;
                         Game g = game;
                         string s = string.Empty;
 
                         if (game == null)
                         {
-                                g = (Game)this.Session["Game"];
+                                g = (Game)session["Game"];
                         }
 
-                        if (this.Session["Done"] != null && (bool)this.Session["Done"] != false)
+                        if (session["Done"] != null && (bool)session["Done"] != false)
                         {
                                 // Do nothing
                         }
                         else if (g.Done())
                         {
                                 s = g.FinalTally();
-                                this.Session["Done"] = true;
+                                session["Done"] = true;
                         }
                         else
                         {

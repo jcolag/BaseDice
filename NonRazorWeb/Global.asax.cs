@@ -24,10 +24,15 @@ namespace NonRazorWeb
 
                 public static void RegisterGlobalFilters(GlobalFilterCollection filters)
                 {
+                        if (filters == null)
+                        {
+                                return;
+                        }
+
                         filters.Add(new HandleErrorAttribute());
                 }
 
-                protected void Application_Start()
+                protected static void Application_Start()
                 {
                         AreaRegistration.RegisterAllAreas();
                         RegisterGlobalFilters(GlobalFilters.Filters);
