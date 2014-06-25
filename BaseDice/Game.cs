@@ -93,14 +93,36 @@ namespace BaseDice
                         if (this.point == 0)
                         {
                                 report = this.TurnNoPoint(roll);
-                                this.point = rollTotal;
-                                report = "the point is " + this.point.ToString() + ", " + report;
+                                if (rollTotal == 12)
+                                {
+                                        report += " (Crapped out, bets pushed) ";
+                                }
+                                else if (new List<int>() { 2, 3 }.Contains(rollTotal))
+                                {
+                                        report += " (Crapped out) ";
+                                }
+                                else if (new List<int>() { 7, 11 }.Contains(rollTotal))
+                                {
+                                        report += " (Natural) ";
+                                }
+                                else
+                                {
+                                        this.point = rollTotal;
+                                        report = "the point is " + this.point.ToString() + ", " + report;
+                                        report += " (On) ";
+                                }
                         }
                         else
                         {
                                 if (rollTotal == this.point)
                                 {
                                         report = this.TurnPointMatched(roll);
+                                        report += " (Hit the point) ";
+                                        this.point = 0;
+                                }
+                                else if (rollTotal == 7)
+                                {
+                                        report += " (Seven-out) ";
                                         this.point = 0;
                                 }
 
@@ -145,11 +167,11 @@ namespace BaseDice
                 public string FinalTally()
                 {
                         return this.runs.ToString() + " run" +
-                                (this.runs == 1 ? "" : "s") + ".  " +
+                                (this.runs == 1 ? string.Empty : "s") + ".  " +
                                 this.hits.ToString() + " hit" +
-                                (this.hits == 1 ? "" : "s") + ".  " +
+                                (this.hits == 1 ? string.Empty : "s") + ".  " +
                                 this.errors.ToString() + " error" +
-                                (this.errors == 1 ? "" : "s") + ".";
+                                (this.errors == 1 ? string.Empty : "s") + ".";
                 }
 
                 /// <summary>
