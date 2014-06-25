@@ -18,16 +18,6 @@ namespace NonRazorWeb.Controllers
         public class HomeController : Controller
         {
                 /// <summary>
-                /// The running HTML report.
-                /// </summary>
-                private string html = string.Empty;
-
-                /// <summary>
-                /// The game is done.
-                /// </summary>
-                private bool done = false;
-
-                /// <summary>
                 /// Controller for the front page.
                 /// </summary>
                 /// <returns>The view.</returns>
@@ -35,17 +25,29 @@ namespace NonRazorWeb.Controllers
                 {
                         Game g = new Game();
                         string s = string.Empty;
+                        string html = string.Empty;
+                        bool done = false;
+
+                        html = "<h1>Play ball&hellip;!</h1>\n";
+                        this.Session.Add("Game", g);
+                        this.Session.Add("Done", done);
 
                         while (!done)
                         {
-                                s = ShowNextPlay(g);
+                                s = this.ShowNextPlay(null);
                                 if (!string.IsNullOrWhiteSpace(s))
                                 {
-                                        this.html += s.Replace(Environment.NewLine, "<br>") + "<br>\n";
+                                        html += s.Replace(Environment.NewLine, "<br>") + "<br>\n";
+                                }
+
+                                if (this.Session["Done"] != null)
+                                {
+                                        done = (bool)this.Session["Done"];
                                 }
                         }
 
-                        this.ViewData["Message"] = this.html;
+                        this.ViewData["Message"] = html;
+                        this.Session.Add("Html", html);
                         return this.View();
                 }
 
@@ -53,19 +55,25 @@ namespace NonRazorWeb.Controllers
                 /// Shows the next play.
                 /// </summary>
                 /// <returns>The next play.</returns>
-                /// <param name="g">The game component.</param>
-                private string ShowNextPlay(Game g)
+                /// <param name="game">The game component.</param>
+                private string ShowNextPlay(Game game)
                 {
+                        Game g = game;
                         string s = string.Empty;
 
-                        if (done)
+                        if (game == null)
+                        {
+                                g = (Game)this.Session["Game"];
+                        }
+
+                        if (this.Session["Done"] != null && (bool)this.Session["Done"] != false)
                         {
                                 // Do nothing
                         }
                         else if (g.Done())
                         {
                                 s = g.FinalTally();
-                                done = true;
+                                this.Session["Done"] = true;
                         }
                         else
                         {
