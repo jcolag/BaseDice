@@ -13,6 +13,11 @@ namespace BaseDice
         public class Game
         {
                 /// <summary>
+                /// The number of outs per inning.
+                /// </summary>
+                private const int Inning = 3;
+
+                /// <summary>
                 /// The random number generator.
                 /// </summary>
                 private Random rand = new Random();
@@ -36,6 +41,11 @@ namespace BaseDice
                 /// The number of outs.
                 /// </summary>
                 private int outs;
+
+                /// <summary>
+                /// The previous value of outs.
+                /// </summary>
+                private int lastouts = 0;
 
                 /// <summary>
                 /// The player's score.
@@ -146,6 +156,35 @@ namespace BaseDice
                                                 " Home Plate." + nl;
                                 this.home = 0;
                         }
+
+                        if (this.outs > 0 && this.outs != this.lastouts && this.outs % Game.Inning == 0)
+                        {
+                                int which = this.outs / Game.Inning;
+                                report += nl + " * " + which.ToString();
+                                switch (which)
+                                {
+                                case 1:
+                                        report += "st";
+                                        break;
+                                case 2:
+                                        report += "nd";
+                                        break;
+                                case 3:
+                                        report += "rd";
+                                        break;
+                                default:
+                                        report += "th";
+                                        break;
+                                }
+
+                                report += " inning over! *";
+                                foreach (Base b in this.bases)
+                                {
+                                        b.Clear();
+                                }
+                        }
+
+                        this.lastouts = this.outs;
 
                         return runners +
                                 "Rolled " + DiceTalk(rollTotal, roll[0] == roll[1]) + ", " + report;
@@ -445,7 +484,7 @@ namespace BaseDice
                         {
                                 if (this.bases[0].Out())
                                 {
-                                        report = "Eliminate man first";
+                                        report = "Eliminate man on first";
                                         ++this.outs;
                                 }
                                 else

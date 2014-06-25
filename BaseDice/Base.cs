@@ -99,6 +99,14 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Inning is over; player leaves.
+                /// </summary>
+                public void Clear()
+                {
+                        this.occupied = false;
+                }
+
+                /// <summary>
                 /// Sets the callback for landing on the base.
                 /// </summary>
                 /// <param name="callback">The callback function.</param>
