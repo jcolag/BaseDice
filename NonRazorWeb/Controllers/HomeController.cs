@@ -53,10 +53,12 @@ namespace NonRazorWeb.Controllers
                 {
                         HttpSessionStateBase session = this.Session;
                         Game g = (Game)session["Game"];
+                        List<int> roll;
                         bool done = (bool)session["Done"];
                         string html = (string)session["Html"];
                         string s = string.Empty;
                         string nl = Environment.NewLine;
+                        string dice = string.Empty;
 
                         if (session == null)
                         {
@@ -74,7 +76,13 @@ namespace NonRazorWeb.Controllers
                                 s = s.Replace(nl, "<br>") + "<br>" + nl;
                         }
 
-                        html += s;
+                        roll = g.LastRoll();
+                        foreach (int die in roll)
+                        {
+                                dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
+                        }
+
+                        html += dice + "<br>" + s;
                         this.ViewData["Message"] = html;
                         session["Html"] = html;
                         return this.View();

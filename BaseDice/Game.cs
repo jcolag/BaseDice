@@ -68,6 +68,11 @@ namespace BaseDice
                 private int home;
 
                 /// <summary>
+                /// The roll of the dice.
+                /// </summary>
+                private List<int> roll;
+
+                /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Game"/> class.
                 /// </summary>
                 public Game()
@@ -91,10 +96,10 @@ namespace BaseDice
                 public string TakeTurn()
                 {
                         int rollTotal = 0;
-                        List<int> roll = this.Roll();
                         string report = string.Empty;
                         string nl = Environment.NewLine;
 
+                        this.roll = this.Roll();
                         foreach (int val in roll)
                         {
                                 rollTotal += val;
@@ -197,6 +202,15 @@ namespace BaseDice
                 public bool Done()
                 {
                         return this.outs >= 27;
+                }
+
+                /// <summary>
+                /// Return the last roll.
+                /// </summary>
+                /// <returns>The roll.</returns>
+                public List<int> LastRoll()
+                {
+                        return this.roll;
                 }
 
                 /// <summary>
