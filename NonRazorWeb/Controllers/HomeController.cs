@@ -82,7 +82,8 @@ namespace NonRazorWeb.Controllers
                                 dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
                         }
 
-                        html += dice + "<br>" + s;
+                        html += dice + "<br>" + s +
+                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br>" + nl;
                         this.ViewData["Message"] = html;
                         session["Html"] = html;
                         return this.View();

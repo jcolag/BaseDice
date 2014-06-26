@@ -36,6 +36,18 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Gets a value indicating whether this base has a runner.
+                /// </summary>
+                /// <value><c>true</c> if this instance has runner; otherwise, <c>false</c>.</value>
+                public bool HasRunner
+                {
+                        get
+                        {
+                                return this.occupied;
+                        }
+                }
+
+                /// <summary>
                 /// Advance the player to the next base.
                 /// </summary>
                 /// <returns>Runner was on base.</returns>

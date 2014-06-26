@@ -6,6 +6,7 @@ namespace BaseDice
 {
         using System;
         using System.Collections.Generic;
+        using System.Collections.ObjectModel;
 
         /// <summary>
         /// One game of BaseDice.
@@ -208,9 +209,24 @@ namespace BaseDice
                 /// Return the last roll.
                 /// </summary>
                 /// <returns>The roll.</returns>
-                public System.Collections.ObjectModel.Collection<int> LastRoll()
+                public Collection<int> LastRoll()
                 {
                         return new System.Collections.ObjectModel.Collection<int>(this.roll);
+                }
+
+                /// <summary>
+                /// Report the state of the bases.
+                /// </summary>
+                /// <returns>String where each character is 1 if a runner is on-base.</returns>
+                public string Diamond()
+                {
+                        string coll = string.Empty;
+                        foreach (Base b in this.bases)
+                        {
+                                coll = (b.HasRunner ? "1" : "0") + coll;
+                        }
+
+                        return coll;
                 }
 
                 /// <summary>
