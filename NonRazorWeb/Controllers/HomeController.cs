@@ -57,6 +57,7 @@ namespace NonRazorWeb.Controllers
                         bool done = (bool)session["Done"];
                         string html = (string)session["Html"];
                         string s = string.Empty;
+                        string message = string.Empty;
                         string nl = Environment.NewLine;
                         string dice = string.Empty;
 
@@ -73,7 +74,8 @@ namespace NonRazorWeb.Controllers
                         s = this.ShowNextPlay(null);
                         if (!string.IsNullOrWhiteSpace(s))
                         {
-                                s = s.Replace(nl, "<br>") + "<br>" + nl;
+                                s = s.Replace(nl, "<br>").Replace(" * ", "<b>").Replace(" *", "</b>") +
+                                        "<br>" + nl;
                         }
 
                         roll = g.LastRoll();
@@ -82,9 +84,11 @@ namespace NonRazorWeb.Controllers
                                 dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
                         }
 
-                        html += dice + "<br>" + s +
-                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br>" + nl;
-                        this.ViewData["Message"] = html;
+                        message = dice + "<br>" + s +
+                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
+                        html += message;
+                        this.ViewData["Message"] = message;
+                        this.ViewData["History"] = html;
                         session["Html"] = html;
                         return this.View();
                 }

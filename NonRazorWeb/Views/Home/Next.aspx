@@ -5,8 +5,13 @@
 	<title></title>
 </head>
 <body>
-	<div>
-		<%= ViewData["Message"] %>
+	<div id="current">
+	    <%= ViewData["Message"] %>
+	</div>
+	<%=Html.ActionLink("Next", "Next") %>
+	<hr>
+	<div id="history">
+		<%= ViewData["History"] %>
 	</div>
 	<%=Html.ActionLink("Next", "Next") %>
 </body>
