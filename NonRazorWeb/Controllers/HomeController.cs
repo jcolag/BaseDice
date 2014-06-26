@@ -53,7 +53,7 @@ namespace NonRazorWeb.Controllers
                 {
                         HttpSessionStateBase session = this.Session;
                         Game g = (Game)session["Game"];
-                        List<int> roll;
+                        System.Collections.ObjectModel.Collection<int> roll;
                         bool done = (bool)session["Done"];
                         string html = (string)session["Html"];
                         string s = string.Empty;

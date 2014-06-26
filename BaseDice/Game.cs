@@ -100,14 +100,14 @@ namespace BaseDice
                         string nl = Environment.NewLine;
 
                         this.roll = this.Roll();
-                        foreach (int val in roll)
+                        foreach (int val in this.roll)
                         {
                                 rollTotal += val;
                         }
 
                         if (this.point == 0)
                         {
-                                report = this.TurnNoPoint(roll);
+                                report = this.TurnNoPoint(this.roll);
                                 if (rollTotal == 12)
                                 {
                                         report += " (Crapped out, bets pushed) ";
@@ -131,7 +131,7 @@ namespace BaseDice
                         {
                                 if (rollTotal == this.point)
                                 {
-                                        report = this.TurnPointMatched(roll);
+                                        report = this.TurnPointMatched(this.roll);
                                         report += " (Hit the point) ";
                                         this.point = 0;
                                 }
@@ -141,7 +141,7 @@ namespace BaseDice
                                         this.point = 0;
                                 }
 
-                                string report2 = this.TurnWithPoint(roll);
+                                string report2 = this.TurnWithPoint(this.roll);
                                 if (!string.IsNullOrWhiteSpace(report) && !string.IsNullOrWhiteSpace(report2))
                                 {
                                         report += nl + report2;
@@ -192,7 +192,7 @@ namespace BaseDice
                         this.lastouts = this.outs;
 
                         return runners +
-                                "Rolled " + DiceTalk(rollTotal, roll[0] == roll[1]) + ", " + report;
+                                "Rolled " + DiceTalk(rollTotal, this.roll[0] == this.roll[1]) + ", " + report;
                 }
 
                 /// <summary>
@@ -208,9 +208,9 @@ namespace BaseDice
                 /// Return the last roll.
                 /// </summary>
                 /// <returns>The roll.</returns>
-                public List<int> LastRoll()
+                public System.Collections.ObjectModel.Collection<int> LastRoll()
                 {
-                        return this.roll;
+                        return new System.Collections.ObjectModel.Collection<int>(this.roll);
                 }
 
                 /// <summary>
@@ -231,12 +231,12 @@ namespace BaseDice
                 /// Translates the roll to crap-ese.
                 /// </summary>
                 /// <returns>The talk.</returns>
-                /// <param name="roll">The roll.</param>
+                /// <param name="number">The roll.</param>
                 /// <param name="equal">The dice show the same face.</param>
-                private static string DiceTalk(int roll, bool equal)
+                private static string DiceTalk(int number, bool equal)
                 {
                         string res = string.Empty;
-                        switch (roll)
+                        switch (number)
                         {
                                 case 2:
                                 res = "Snake Eyes";
@@ -280,18 +280,18 @@ namespace BaseDice
                 /// Takes the turns with the point not set.
                 /// </summary>
                 /// <returns>The resulting report.</returns>
-                /// <param name="roll">The roll.</param>
-                private string TurnNoPoint(List<int> roll)
+                /// <param name="dieRolls">The roll.</param>
+                private string TurnNoPoint(List<int> dieRolls)
                 {
                         int rollTotal = 0;
                         string report = string.Empty;
 
-                        foreach (int val in roll)
+                        foreach (int val in dieRolls)
                         {
                                 rollTotal += val;
                         }
 
-                        if (roll[0] == roll[1])
+                        if (dieRolls[0] == dieRolls[1])
                         {
                                 this.bases[2].Advance();
                                 this.bases[1].Advance();
@@ -355,7 +355,7 @@ namespace BaseDice
                         else
                         {
                                 throw new ArgumentOutOfRangeException(
-                                        "roll",
+                                        "dieRolls",
                                         "Missed a roll - point off! " + rollTotal.ToString());
                         }
 
@@ -366,13 +366,13 @@ namespace BaseDice
                 /// Take the turn when the point has been matched.
                 /// </summary>
                 /// <returns>The report.</returns>
-                /// <param name="roll">The roll.</param>
-                private string TurnPointMatched(List<int> roll)
+                /// <param name="dieRolls">The roll.</param>
+                private string TurnPointMatched(List<int> dieRolls)
                 {
                         int rollTotal = 0;
                         string report = string.Empty;
 
-                        foreach (int val in roll)
+                        foreach (int val in dieRolls)
                         {
                                 rollTotal += val;
                         }
@@ -382,7 +382,7 @@ namespace BaseDice
                                 // Do nothing
                                 report = "Matched the point";
                         }
-                        else if (roll[0] == 5 && roll[1] == 5)
+                        else if (dieRolls[0] == 5 && dieRolls[1] == 5)
                         {
                                 this.bases[0].Land();
                                 this.bases[0].Advance();
@@ -390,13 +390,13 @@ namespace BaseDice
                                 ++this.hits;
                                 report = "Triple";
                         }
-                        else if (roll[0] == 3 && roll[1] == 3)
+                        else if (dieRolls[0] == 3 && dieRolls[1] == 3)
                         {
                                 this.bases[0].Error();
                                 ++this.errors;
                                 report = "Error";
                         }
-                        else if (roll[0] == roll[1])
+                        else if (dieRolls[0] == dieRolls[1])
                         {
                                 this.bases[0].Land();
                                 ++this.errors;
@@ -434,7 +434,7 @@ namespace BaseDice
                         else
                         {
                                 throw new ArgumentOutOfRangeException(
-                                        "roll",
+                                        "dieRolls",
                                         "Missed a roll - made the point! " + rollTotal.ToString());
                         }
 
@@ -445,13 +445,13 @@ namespace BaseDice
                 /// Takes the turn with a point to meet.
                 /// </summary>
                 /// <returns>The report.</returns>
-                /// <param name="roll">The roll.</param>
-                private string TurnWithPoint(List<int> roll)
+                /// <param name="dieRolls">The roll.</param>
+                private string TurnWithPoint(List<int> dieRolls)
                 {
                         int rollTotal = 0;
                         string report = string.Empty;
 
-                        foreach (int val in roll)
+                        foreach (int val in dieRolls)
                         {
                                 rollTotal += val;
                         }
@@ -506,7 +506,7 @@ namespace BaseDice
                                         report = "Thrown to first";
                                 }
                         }
-                        else if (roll[0] == roll[1])
+                        else if (dieRolls[0] == dieRolls[1])
                         {
                                 this.bases[0].Land();
                                 ++this.hits;
@@ -515,7 +515,7 @@ namespace BaseDice
                         else
                         {
                                 throw new ArgumentOutOfRangeException(
-                                        "roll",
+                                        "dieRolls",
                                         "Missed a roll - point on! " + rollTotal.ToString());
                         }
 
