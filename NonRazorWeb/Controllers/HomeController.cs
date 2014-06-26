@@ -28,10 +28,34 @@ namespace NonRazorWeb.Controllers
                 public ActionResult Index()
                 {
                         HttpSessionStateBase session = this.Session;
-                        Game g = new Game();
-                        string s = string.Empty;
                         string html = string.Empty;
-                        bool done = false;
+
+                        if (session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
+                        html = "<h1>Play ball&hellip;!</h1>" + Environment.NewLine;
+                        session.Add("Game", new Game());
+                        session.Add("Done", false);
+
+                        this.ViewData["Message"] = html;
+                        session.Add("Html", html);
+                        return this.View();
+                }
+
+                /// <summary>
+                /// Controller for the next page.
+                /// </summary>
+                /// <returns>The next view.</returns>
+                [AcceptVerbs(HttpVerbs.Get)]
+                public ActionResult Next()
+                {
+                        HttpSessionStateBase session = this.Session;
+                        Game g = (Game)session["Game"];
+                        bool done = (bool)session["Done"];
+                        string html = (string)session["Html"];
+                        string s = string.Empty;
                         string nl = Environment.NewLine;
 
                         if (session == null)
@@ -39,26 +63,20 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        html = "<h1>Play ball&hellip;!</h1>" + nl;
-                        session.Add("Game", g);
-                        session.Add("Done", done);
-
-                        while (!done)
+                        if (done)
                         {
-                                s = this.ShowNextPlay(null);
-                                if (!string.IsNullOrWhiteSpace(s))
-                                {
-                                        html += s.Replace(nl, "<br>") + "<br>" + nl;
-                                }
-
-                                if (session["Done"] != null)
-                                {
-                                        done = (bool)session["Done"];
-                                }
+                                return null;
                         }
 
+                        s = this.ShowNextPlay(null);
+                        if (!string.IsNullOrWhiteSpace(s))
+                        {
+                                s = s.Replace(nl, "<br>") + "<br>" + nl;
+                        }
+
+                        html += s;
                         this.ViewData["Message"] = html;
-                        session.Add("Html", html);
+                        session["Html"] = html;
                         return this.View();
                 }
 

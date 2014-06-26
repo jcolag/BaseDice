@@ -71,6 +71,7 @@
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Home\Next.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
