@@ -67,11 +67,6 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        if (done)
-                        {
-                                return null;
-                        }
-
                         s = this.ShowNextPlay(null);
                         if (!string.IsNullOrWhiteSpace(s))
                         {
@@ -79,15 +74,19 @@ namespace NonRazorWeb.Controllers
                                         "<br>" + nl;
                         }
 
-                        roll = g.LastRoll();
-                        foreach (int die in roll)
+                        if (!done)
                         {
-                                dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
+                                roll = g.LastRoll();
+                                foreach (int die in roll)
+                                {
+                                        dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
+                                }
+
+                                message = dice + "<br>" + s +
+                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
+                                html += message;
                         }
 
-                        message = dice + "<br>" + s +
-                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
-                        html += message;
                         viewdata["Message"] = message;
                         viewdata["History"] = html;
                         session["Html"] = html;
