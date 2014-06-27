@@ -8,5 +8,4 @@
 	<div id="history">
 		<%= ViewData["History"] %>
 	</div>
-	<%=Html.ActionLink("Next", "Next") %>
 </asp:Content>

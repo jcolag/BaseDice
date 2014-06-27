@@ -4,12 +4,13 @@
 <head runat="server">
 	<asp:ContentPlaceHolder ID="head" runat="server">
 		<title>BaseDice!</title>
+		<link rel="stylesheet" type="text/css" href="/Styles/Master.css" />
 	</asp:ContentPlaceHolder>
 </head>
 <body>
 	<asp:ContentPlaceHolder ID="MainContent" runat="server">
 		
 	</asp:ContentPlaceHolder>
+	<%=Html.ActionLink("Next", "Next") %>
 </body>
 </html>
-
