@@ -67,10 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Shared\BaseDice.master" />
+    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\Next.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
