@@ -52,6 +52,7 @@ namespace NonRazorWeb.Controllers
                 public ActionResult Next()
                 {
                         HttpSessionStateBase session = this.Session;
+                        ViewDataDictionary viewdata = this.ViewData;
                         Game g = (Game)session["Game"];
                         System.Collections.ObjectModel.Collection<int> roll;
                         bool done = (bool)session["Done"];
@@ -87,8 +88,8 @@ namespace NonRazorWeb.Controllers
                         message = dice + "<br>" + s +
                                 "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
                         html += message;
-                        this.ViewData["Message"] = message;
-                        this.ViewData["History"] = html;
+                        viewdata["Message"] = message;
+                        viewdata["History"] = html;
                         session["Html"] = html;
                         return this.View();
                 }
