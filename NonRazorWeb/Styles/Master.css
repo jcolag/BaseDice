@@ -1,1 +1,61 @@
-﻿
+﻿@import url(http://fonts.googleapis.com/css?family=Playball|Exo+2:300);
+body {
+  color: #244151;
+  font-family: "Exo 2", Calibri, "Trebuchet MS", Helvetica, Arial, sans-serif, 'lucida console';
+  height: 100%;
+  line-height: 1.5em;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: justify;
+  vertical-align: middle;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: Playball, Georgia, Times, 'Times New Roman', Serif;
+  color: #300;
+  -moz-transition: color 2s;
+  -webkit-transition: color 2s;
+  -o-transition: color 2s;
+  -ms-transition: color 2s;
+  -transition: color 2s;
+}
+h1 {
+  letter-spacing: -0.05em;
+  word-spacing: -0.04em;
+}
+h2 {
+  letter-spacing: -0.03em;
+  word-spacing: -0.02em;
+}
+h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover {
+  color: #633;
+}
+p.position {
+  color: #003;
+  font-weight: bold;
+  font-style: italic;
+}
+p + p.position {
+  line-height: 1em;
+  margin-top: -0.75em;
+}
+a:link {
+  color: #66c;
+  -moz-transition: color 2s;
+  -webkit-transition: color 2s;
+  -o-transition: color 2s;
+  -ms-transition: color 2s;
+  -transition: color 2s;
+}
+a:hover {
+  color: #339;
+  text-decoration: none;
+}
+a:active {
+  color: #c66;
+  text-decoration: none;
+}
+a:visited {
+  color: #939;
+  text-decoration: none;
+}

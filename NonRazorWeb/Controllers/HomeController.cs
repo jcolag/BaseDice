@@ -35,7 +35,7 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        html = "<h1>Play ball&hellip;!</h1>" + Environment.NewLine;
+                        html = "<h1>Play Ball&hellip;!</h1>" + Environment.NewLine;
                         session.Add("Game", new Game());
                         session.Add("Done", false);
 
