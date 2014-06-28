@@ -211,7 +211,12 @@ namespace BaseDice
                 /// <returns>The roll.</returns>
                 public Collection<int> LastRoll()
                 {
-                        return new System.Collections.ObjectModel.Collection<int>(this.roll);
+                        if (this.roll == null)
+                        {
+                                return new Collection<int>();
+                        }
+
+                        return new Collection<int>(this.roll);
                 }
 
                 /// <summary>
