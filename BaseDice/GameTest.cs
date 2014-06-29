@@ -74,5 +74,37 @@ namespace BaseDice
                                 Assert.AreEqual(s, string.Empty);
                         }
                 }
+
+                /// <summary>
+                /// Verifies the final tally.
+                /// </summary>
+                [Test]
+                public static void FinalTally()
+                {
+                        var g = new Game();
+                        string s;
+                        int countedRuns = 0;
+                        int runs;
+                        int temp;
+                        char[] delims = { ' ' };
+
+                        for (int i = 0; i < 100; i++)
+                        {
+                                s = g.FinalTally();
+                                Assert.IsNotNullOrEmpty(s);
+                                int.TryParse(s.Split(delims)[0], out runs);
+                                Assert.AreEqual(runs, countedRuns);
+                                s = g.TakeTurn();
+                                Assert.IsNotNullOrEmpty(s);
+                                if (s.Contains(" Home Plate"))
+                                {
+                                        int.TryParse(s.Split(delims)[0], out temp);
+                                        countedRuns += temp;
+                                }
+                        }
+
+                        s = g.FinalTally();
+                        Assert.IsNotNullOrEmpty(s);
+                }
         }
 }
