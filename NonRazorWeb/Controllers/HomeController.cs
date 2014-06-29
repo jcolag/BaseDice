@@ -94,6 +94,54 @@ namespace NonRazorWeb.Controllers
                 }
 
                 /// <summary>
+                /// Controller for the roll partial page.
+                /// </summary>
+                /// <returns>The next view.</returns>
+                [AcceptVerbs(HttpVerbs.Get)]
+                public ActionResult Roll()
+                {
+                        HttpSessionStateBase session = this.Session;
+                        ViewDataDictionary viewdata = this.ViewData;
+                        Game g = (Game)session["Game"];
+                        System.Collections.ObjectModel.Collection<int> roll;
+                        bool done = (bool)session["Done"];
+                        string html = (string)session["Html"];
+                        string s = string.Empty;
+                        string message = string.Empty;
+                        string nl = Environment.NewLine;
+                        string dice = string.Empty;
+
+                        if (session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
+                        s = this.ShowNextPlay(null);
+                        if (!string.IsNullOrWhiteSpace(s))
+                        {
+                                s = s.Replace(nl, "<br>").Replace(" * ", "<b>").Replace(" *", "</b>") +
+                                        "<br>" + nl;
+                        }
+
+                        if (!done)
+                        {
+                                roll = g.LastRoll();
+                                foreach (int die in roll)
+                                {
+                                        dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
+                                }
+
+                                message = dice + "<br>" + s +
+                                        "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
+                                html += message;
+                        }
+
+                        Response.Write(message);
+                        session["Html"] = html;
+                        return null;
+                }
+
+                /// <summary>
                 /// Shows the next play.
                 /// </summary>
                 /// <returns>The next play.</returns>

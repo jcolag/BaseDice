@@ -4,7 +4,11 @@
 <head runat="server">
 	<asp:ContentPlaceHolder ID="head" runat="server">
 		<title>BaseDice!</title>
-		<link rel="stylesheet" type="text/css" href="/Styles/Master.css" />
+	</asp:ContentPlaceHolder>
+	<link rel="stylesheet" type="text/css" href="/Styles/Master.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	</script>
+	<asp:ContentPlaceHolder ID="Scripts" runat="server">
 	</asp:ContentPlaceHolder>
 </head>
 <body>
