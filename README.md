@@ -43,7 +43,7 @@ Future
 
 Among other things...
 
- - [ ] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.
+ - [ ] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.  Massively multiplayer online baseball...?
 
  - [X] Separating the output into innings might be nice, though scores seem very low as it is.  (_After fixing the craps point system, scores are no longer low._)
 
@@ -56,3 +56,12 @@ Among other things...
  - [ ] Change the rules to better fit the Craps paradigm.  As mentioned, I don't know much about either game, but I'm still uncomfortable with crapping out advancing all the runners on bases.
 
  - [ ] In fact, the rules should be factored out into configuration.  Hardcoding them is seriously ugly, though since many are logic connections, that may prove difficult.
+
+Credits
+-------
+
+As mentioned, someone else created the game, whose name I've somehow managed to lose, over the years.
+
+The shortcut icon is a combination of pianoBrad's [Baseball](https://openclipart.org/detail/75919/baseball-by-pianobrad) and the pips from pierro72's [dice](https://openclipart.org/detail/181176/dice-by-pierro72-181176).
+
+The dynamic work is handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.
