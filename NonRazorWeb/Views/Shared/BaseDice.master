@@ -16,6 +16,5 @@
 	<asp:ContentPlaceHolder ID="MainContent" runat="server">
 		
 	</asp:ContentPlaceHolder>
-	<%=Html.ActionLink("Next", "Next") %>
 </body>
 </html>
