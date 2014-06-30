@@ -53,43 +53,17 @@ namespace NonRazorWeb.Controllers
                 {
                         HttpSessionStateBase session = this.Session;
                         ViewDataDictionary viewdata = this.ViewData;
-                        Game g = (Game)session["Game"];
-                        System.Collections.ObjectModel.Collection<int> roll;
-                        bool done = (bool)session["Done"];
-                        string html = (string)session["Html"];
-                        string s = string.Empty;
-                        string message = string.Empty;
-                        string nl = Environment.NewLine;
-                        string dice = string.Empty;
 
                         if (session == null)
                         {
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        s = this.ShowNextPlay(null);
-                        if (!string.IsNullOrWhiteSpace(s))
-                        {
-                                s = s.Replace(nl, "<br>").Replace(" * ", "<b>").Replace(" *", "</b>") +
-                                        "<br>" + nl;
-                        }
-
-                        if (!done)
-                        {
-                                roll = g.LastRoll();
-                                foreach (int die in roll)
-                                {
-                                        dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
-                                }
-
-                                message = dice + "<br>" + s +
-                                "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
-                                html += message;
-                        }
+                        string message = this.ProcessTurn();
+                        string html = (string)session["Html"];
 
                         viewdata["Message"] = message;
                         viewdata["History"] = html;
-                        session["Html"] = html;
                         return this.View();
                 }
 
@@ -99,6 +73,23 @@ namespace NonRazorWeb.Controllers
                 /// <returns>The next view.</returns>
                 [AcceptVerbs(HttpVerbs.Get)]
                 public ActionResult Roll()
+                {
+                        string message = this.ProcessTurn();
+
+                        if (this.Session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
+                        Response.Write(message);
+                        return null;
+                }
+
+                /// <summary>
+                /// Merge the logic for the turn pages.
+                /// </summary>
+                /// <returns>The turn results.</returns>
+                private string ProcessTurn()
                 {
                         HttpSessionStateBase session = this.Session;
                         ViewDataDictionary viewdata = this.ViewData;
@@ -110,7 +101,6 @@ namespace NonRazorWeb.Controllers
                         string message = string.Empty;
                         string nl = Environment.NewLine;
                         string dice = string.Empty;
-
                         if (session == null)
                         {
                                 throw new ObjectDisposedException(GetType().Name);
@@ -119,8 +109,7 @@ namespace NonRazorWeb.Controllers
                         s = this.ShowNextPlay(null);
                         if (!string.IsNullOrWhiteSpace(s))
                         {
-                                s = s.Replace(nl, "<br>").Replace(" * ", "<b>").Replace(" *", "</b>") +
-                                        "<br>" + nl;
+                                s = s.Replace(nl, "<br>").Replace(" * ", "<b>").Replace(" *", "</b>") + "<br>" + nl;
                         }
 
                         if (!done)
@@ -131,14 +120,12 @@ namespace NonRazorWeb.Controllers
                                         dice += "<img src=\"/Images/d" + die.ToString() + "pip.png\">" + nl;
                                 }
 
-                                message = dice + "<br>" + s +
-                                        "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
+                                message = dice + "<br>" + s + "<img src=\"/Images/Diamond" + g.Diamond() + ".png\"><br><br>" + nl;
                                 html += message;
                         }
 
-                        Response.Write(message);
                         session["Html"] = html;
-                        return null;
+                        return message;
                 }
 
                 /// <summary>
