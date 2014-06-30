@@ -96,9 +96,20 @@ namespace BaseDice
                 /// <returns>A report of the at-bat results.</returns>
                 public string TakeTurn()
                 {
+                        return this.TakeTurn(PlayerBoost.Nothing);
+                }
+
+                /// <summary>
+                /// Takes the turn.
+                /// </summary>
+                /// <returns>>A report of the at-bat results.</returns>
+                /// <param name="bonus">Bonus the player would like to use.</param>
+                public string TakeTurn(PlayerBoost bonus)
+                {
                         int rollTotal = 0;
                         string report = string.Empty;
                         string nl = Environment.NewLine;
+                        bool inning = false;
 
                         this.roll = this.Roll();
                         foreach (int val in this.roll)
@@ -167,23 +178,10 @@ namespace BaseDice
                         {
                                 int which = this.outs / Game.Inning;
                                 report += nl + " * " + which.ToString();
-                                switch (which)
-                                {
-                                case 1:
-                                        report += "st";
-                                        break;
-                                case 2:
-                                        report += "nd";
-                                        break;
-                                case 3:
-                                        report += "rd";
-                                        break;
-                                default:
-                                        report += "th";
-                                        break;
-                                }
+                                report += Ordinal(which);
 
                                 report += " inning over! *";
+                                inning = true;
                                 foreach (Base b in this.bases)
                                 {
                                         b.Clear();
@@ -191,6 +189,38 @@ namespace BaseDice
                         }
 
                         this.lastouts = this.outs;
+
+                        if (!inning)
+                        {
+                                switch (bonus)
+                                {
+                                case PlayerBoost.Walk:
+                                        this.bases[0].Land();
+                                        report += "Batter walks." + nl;
+                                        break;
+                                case PlayerBoost.StealBase:
+                                        // Advance the furthest runner along.
+                                        for (int i = this.bases.Length - 1; i >= 0; i--)
+                                        {
+                                                if (this.bases[i].HasRunner)
+                                                {
+                                                        this.bases[i].Advance();
+                                                        report += "Runner on " + i.ToString() + Ordinal(i) +
+                                                                " steals a base!" + nl;
+                                                        break;
+                                                }
+                                        }
+
+                                        break;
+                                case PlayerBoost.Nothing:
+                                        // Do nothing
+                                        break;
+                                default:
+                                        throw new ArgumentOutOfRangeException(
+                                                "bonus",
+                                                "Impossible bonus passed");
+                                }
+                        }
 
                         return runners +
                                 "Rolled " + DiceTalk(rollTotal, this.roll[0] == this.roll[1]) + ", " + report;
@@ -246,6 +276,34 @@ namespace BaseDice
                                 (this.hits == 1 ? string.Empty : "s") + ".  " +
                                 this.errors.ToString() + " error" +
                                 (this.errors == 1 ? string.Empty : "s") + ".";
+                }
+
+                /// <summary>
+                /// Get the Ordinal suffix of the specified number.
+                /// </summary>
+                /// <returns>The suffix.</returns>
+                /// <param name="which">Which number.</param>
+                private static string Ordinal(int which)
+                {
+                        string suffix;
+
+                        switch (which)
+                        {
+                        case 1:
+                                suffix = "st";
+                                break;
+                        case 2:
+                                suffix = "nd";
+                                break;
+                        case 3:
+                                suffix = "rd";
+                                break;
+                        default:
+                                suffix = "th";
+                                break;
+                        }
+
+                        return suffix;
                 }
 
                 /// <summary>
