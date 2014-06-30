@@ -63,7 +63,7 @@ namespace NonRazorWeb.Controllers
                         string html = (string)session["Html"];
 
                         viewdata["History"] = html;
-                        message += this.BreakPadding(message, 7);
+                        message += HomeController.BreakPadding(message, 7);
                         viewdata["Message"] = message;
                         return this.View();
                 }
@@ -82,20 +82,31 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        message += this.BreakPadding(message, 7);
+                        message += HomeController.BreakPadding(message, 7);
                         Response.Write(message);
                         return null;
                 }
 
-                public string BreakPadding(string message, int max)
+                /// <summary>
+                /// Adds padding to the line breaks.
+                /// </summary>
+                /// <returns>The padding.</returns>
+                /// <param name="message">Message to pad.</param>
+                /// <param name="max">Maximum number of lines.</param>
+                private static string BreakPadding(string message, int max)
                 {
                         string pad = string.Empty;
                         string nl = Environment.NewLine;
                         string[] delim = { "<br>" };
                         int lines;
 
+                        if (string.IsNullOrWhiteSpace(message))
+                        {
+                                return pad;
+                        }
+
                         lines = message.Split(delim, StringSplitOptions.None).Length;
-                        for (int i = lines; i < 7; i++)
+                        for (int i = lines; i < max; i++)
                         {
                                 pad += "<br>" + nl;
                         }

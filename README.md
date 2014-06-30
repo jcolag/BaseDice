@@ -27,7 +27,7 @@ Usage
 
  3. Play.
 
-The "game" engine runs for 27 outs (no inning structure, for the moment), reporting what has happened and a final score.
+The "game" engine runs for 27 outs (broken somewhat carelessly into nine innings), reporting what has happened and a final score.
 
 I should point out that I don't follow baseball and don't gamble, so if any part of this looks peculiar--as if I don't know what the output should look like--it's because I'm just implementing the idea directly.
 
