@@ -13,8 +13,9 @@
 	<link rel="shortcut icon" type="image/x-icon" href="/Images/favicon.ico" />
 </head>
 <body>
-	<asp:ContentPlaceHolder ID="MainContent" runat="server">
-		
-	</asp:ContentPlaceHolder>
+	<div id="main">
+		<asp:ContentPlaceHolder ID="MainContent" runat="server">
+		</asp:ContentPlaceHolder>
+	</div>
 </body>
 </html>

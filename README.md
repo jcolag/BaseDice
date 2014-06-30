@@ -62,6 +62,6 @@ Credits
 
 As mentioned, someone else created the game, whose name I've somehow managed to lose, over the years.
 
-The shortcut icon is a combination of pianoBrad's [Baseball](https://openclipart.org/detail/75919/baseball-by-pianobrad) and the pips from pierro72's [dice](https://openclipart.org/detail/181176/dice-by-pierro72-181176).
+The shortcut icon is a combination of pianoBrad's [Baseball](https://openclipart.org/detail/75919/baseball-by-pianobrad) and the pips from pierro72's [dice](https://openclipart.org/detail/181176/dice-by-pierro72-181176).  The main background image is jcoop585's [Baseball Sports America](http://pixabay.com/en/baseball-sports-america-192400/).
 
 The dynamic work is handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.

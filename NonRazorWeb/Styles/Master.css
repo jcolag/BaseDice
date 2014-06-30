@@ -4,11 +4,12 @@ body {
   font-family: "Exo 2", Calibri, "Trebuchet MS", Helvetica, Arial, sans-serif, 'lucida console';
   height: 100%;
   line-height: 1.5em;
-  margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
   text-align: justify;
   vertical-align: middle;
+  background-image: url(/Images/baseball20.png);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 h1,h2,h3,h4,h5,h6 {
   font-family: Playball, Georgia, Times, 'Times New Roman', Serif;
@@ -30,14 +31,10 @@ h2 {
 h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover {
   color: #633;
 }
-p.position {
-  color: #003;
-  font-weight: bold;
-  font-style: italic;
-}
-p + p.position {
-  line-height: 1em;
-  margin-top: -0.75em;
+#main {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 a:link {
   color: #66c;

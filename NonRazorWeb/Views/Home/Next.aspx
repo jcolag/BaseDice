@@ -8,7 +8,12 @@
 		var URL = "/Home/Roll/" + $("#Location").val();
 		$.get(URL, function(data) {
 			$("#Result").html(data);
-			$("#History").append(data);
+			var lines = data.split("<br>");
+			$.each(lines, function(i, val) {
+				data = data.replace("<br><br>", "<br>");
+				data = data.replace("<br>\n<br>", "<br>");
+			});
+			$("#History").append(data + "<br>");
 		});
 	}
 	</script>
