@@ -62,8 +62,9 @@ namespace NonRazorWeb.Controllers
                         string message = this.ProcessTurn();
                         string html = (string)session["Html"];
 
-                        viewdata["Message"] = message;
                         viewdata["History"] = html;
+                        message += this.BreakPadding(message, 7);
+                        viewdata["Message"] = message;
                         return this.View();
                 }
 
@@ -81,8 +82,25 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
+                        message += this.BreakPadding(message, 7);
                         Response.Write(message);
                         return null;
+                }
+
+                public string BreakPadding(string message, int max)
+                {
+                        string pad = string.Empty;
+                        string nl = Environment.NewLine;
+                        string[] delim = { "<br>" };
+                        int lines;
+
+                        lines = message.Split(delim, StringSplitOptions.None).Length;
+                        for (int i = lines; i < 7; i++)
+                        {
+                                pad += "<br>" + nl;
+                        }
+
+                        return pad;
                 }
 
                 /// <summary>
