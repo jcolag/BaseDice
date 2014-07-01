@@ -56,3 +56,20 @@ a:visited {
   color: #939;
   text-decoration: none;
 }
+div#Result {
+  float: left;
+  position: fixed;
+  width: 45%;
+}
+div#Controls {
+  position: fixed;
+  width: 45%;
+  top: 15em;
+}
+div#History {
+  float: right;
+  position: absolute;
+  width: 45%;
+  right: 0;
+  top: 0;
+}

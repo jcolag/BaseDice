@@ -18,6 +18,7 @@
 			$("#History").append(data + "<br>");
 		});
 		setBonuses();
+		$('html, body').scrollTop($(document).height());
 	}
 	function setBonuses () {
 		URL = "/Home/Bonuses/";
@@ -47,16 +48,17 @@
 	<div id="Result">
 	    <%= ViewData["Message"] %>
 	</div>
-	<br>
-	<label for="selBonuses">Available Bonuses</label>
-	<select id="selBonuses" name="selBonuses"></select>
-	<br>
-	<input type="button" id="btnSubmit" value="Next" onclick="javascript:getNextRoll();" hidden="true" />
-	<br>
-	<noscript>
-	<%=Html.ActionLink("Next", "Next") %>
-	</noscript>
-	<hr>
+	<div id="Controls">
+		<br>
+		<label for="selBonuses">Available Bonuses</label>
+		<select id="selBonuses" name="selBonuses"></select>
+		<br>
+		<input type="button" id="btnSubmit" value="Next" onclick="javascript:getNextRoll();" hidden="true" />
+		<br>
+		<noscript>
+		<%=Html.ActionLink("Next", "Next") %>
+		</noscript>
+	</div>
 	<div id="History">
 		<%= ViewData["History"] %>
 	</div>
