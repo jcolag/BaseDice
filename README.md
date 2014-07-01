@@ -47,11 +47,11 @@ Among other things...
 
  - [X] Separating the output into innings might be nice, though scores seem very low as it is.  (_After fixing the craps point system, scores are no longer low._)
 
- - [ ] Interactivity.  Of some sort.
+ - [X] Interactivity.  Of some sort.
 
  - [X] Web interface.
 
- - [ ] Some way of distinguishing good teams/players from bad, possibly related to interactivity, somehow.  For example, a player could choose to employ some (earned) tactic at each at-bat that alters the probabilities.
+ - [ ] Some way of distinguishing good teams/players from bad, possibly related to interactivity, somehow.  For example, a player could choose to employ some (earned) tactic at each at-bat that alters the probabilities.  (The bonuses can add strategy and be affixed to the player rather than simply allowing them.)
 
  - [ ] Change the rules to better fit the Craps paradigm.  As mentioned, I don't know much about either game, but I'm still uncomfortable with crapping out advancing all the runners on bases.
 
@@ -64,4 +64,6 @@ As mentioned, someone else created the game, whose name I've somehow managed to 
 
 The shortcut icon is a combination of pianoBrad's [Baseball](https://openclipart.org/detail/75919/baseball-by-pianobrad) and the pips from pierro72's [dice](https://openclipart.org/detail/181176/dice-by-pierro72-181176).  The main background image is jcoop585's [Baseball Sports America](http://pixabay.com/en/baseball-sports-america-192400/).
 
-The dynamic work is handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.
+The fonts, to the extent they're interesting, are [Playball](https://www.google.com/fonts/specimen/Playball) by TypeSETit and [Exo 2](https://www.google.com/fonts/specimen/Exo+2) by Natanael Gama.
+
+The dynamic page updates are handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.

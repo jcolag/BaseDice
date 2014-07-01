@@ -63,7 +63,7 @@ namespace NonRazorWeb.Controllers
                         string html = (string)session["Html"];
 
                         viewdata["History"] = html;
-                        message += HomeController.BreakPadding(message, 7);
+                        message += HomeController.BreakPadding(message, 8);
                         viewdata["Message"] = message;
                         return this.View();
                 }
@@ -82,8 +82,19 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
-                        message += HomeController.BreakPadding(message, 7);
+                        message += HomeController.BreakPadding(message, 8);
                         Response.Write(message);
+                        return null;
+                }
+
+                /// <summary>
+                /// Returns bonuses for the player (stub).
+                /// </summary>
+                /// <returns>The bonus partial.</returns>
+                [AcceptVerbs(HttpVerbs.Get)]
+                public ActionResult Bonuses()
+                {
+                        this.Response.Write("-;Steal Base;Walk");
                         return null;
                 }
 
@@ -184,7 +195,14 @@ namespace NonRazorWeb.Controllers
                         }
                         else
                         {
-                                s = g.TakeTurn();
+                                string param = (string)Request.Params["bonus"];
+                                PlayerBoost bonus = PlayerBoost.Nothing;
+                                if (!string.IsNullOrWhiteSpace(param))
+                                {
+                                        bonus = (PlayerBoost)Enum.Parse(typeof(PlayerBoost), param);
+                                }
+
+                                s = g.TakeTurn(bonus);
                         }
 
                         return s;
