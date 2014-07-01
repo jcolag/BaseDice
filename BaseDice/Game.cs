@@ -83,10 +83,10 @@ namespace BaseDice
                                 this.dice[die] = new Die(this.rand);
                         }
 
-                        this.bases[3] = new Base(null);
-                        this.bases[2] = new Base(this.bases[3]);
-                        this.bases[1] = new Base(this.bases[2]);
-                        this.bases[0] = new Base(this.bases[1]);
+                        this.bases[3] = new Base(null, "Home Plate");
+                        this.bases[2] = new Base(this.bases[3], "Third Base");
+                        this.bases[1] = new Base(this.bases[2], "Second Base");
+                        this.bases[0] = new Base(this.bases[1], "First Base");
                         this.bases[3].SetRun(this.Run);
                 }
 
@@ -205,8 +205,9 @@ namespace BaseDice
                                                 if (this.bases[i].HasRunner)
                                                 {
                                                         this.bases[i].Advance();
-                                                        report += "Runner on " + i.ToString() + Ordinal(i) +
-                                                                " steals a base!" + nl;
+                                                        report += "Runner on " + i.ToString() +
+                                                                Ordinal(i) + " steals " +
+                                                                this.bases[i + 1].Name + "!" + nl;
                                                         break;
                                                 }
                                         }

@@ -12,6 +12,11 @@ namespace BaseDice
         public class Base
         {
                 /// <summary>
+                /// The base's name.
+                /// </summary>
+                private string name = "Somewhere";
+
+                /// <summary>
                 /// The next base.
                 /// </summary>
                 private Base nextBase;
@@ -30,9 +35,23 @@ namespace BaseDice
                 /// Initializes a new instance of the <see cref="BaseDice.Base"/> class.
                 /// </summary>
                 /// <param name="next">The next base.</param>
-                public Base(Base next)
+                /// <param name="basename">The base's name</param>
+                public Base(Base next, string basename)
                 {
+                        this.name = basename;
                         this.nextBase = next;
+                }
+
+                /// <summary>
+                /// Gets the name.
+                /// </summary>
+                /// <value>The name.</value>
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
                 }
 
                 /// <summary>

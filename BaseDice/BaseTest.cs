@@ -19,8 +19,8 @@ namespace BaseDice
                 [Test]
                 public static void TestCreation()
                 {
-                        var b = new Base(null);
-                        var a = new Base(b);
+                        var b = new Base(null, string.Empty);
+                        var a = new Base(b, string.Empty);
 
                         Assert.AreEqual(a.HasRunner, false);
                         Assert.AreEqual(b.HasRunner, false);
@@ -36,8 +36,8 @@ namespace BaseDice
                 [Test]
                 public static void TestRunners()
                 {
-                        var b = new Base(null);
-                        var a = new Base(b);
+                        var b = new Base(null, string.Empty);
+                        var a = new Base(b, string.Empty);
 
                         a.Land();
                         Assert.AreEqual(a.HasRunner, true);
@@ -78,8 +78,8 @@ namespace BaseDice
                 public static void TestHome()
                 {
                         bool success = false;
-                        var b = new Base(null);
-                        var a = new Base(b);
+                        var b = new Base(null, string.Empty);
+                        var a = new Base(b, string.Empty);
 
                         b.SetRun(() => success = true);
                         Assert.AreEqual(success, false);
