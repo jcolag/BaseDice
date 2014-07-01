@@ -196,7 +196,7 @@ namespace BaseDice
                                 {
                                 case PlayerBoost.Walk:
                                         this.bases[0].Land();
-                                        report += "Batter walks." + nl;
+                                        report += nl + "Batter walks." + nl;
                                         break;
                                 case PlayerBoost.StealBase:
                                         // Advance the furthest runner along.
@@ -205,8 +205,8 @@ namespace BaseDice
                                                 if (this.bases[i].HasRunner)
                                                 {
                                                         this.bases[i].Advance();
-                                                        report += "Runner on " + i.ToString() +
-                                                                Ordinal(i) + " steals " +
+                                                        report += nl + "Runner on " + (i + 1).ToString() +
+                                                                Ordinal(i + 1) + " steals " +
                                                                 this.bases[i + 1].Name + "!" + nl;
                                                         break;
                                                 }
