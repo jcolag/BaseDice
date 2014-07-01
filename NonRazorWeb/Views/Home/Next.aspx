@@ -49,9 +49,8 @@
 	</div>
 	<br>
 	<label for="selBonuses">Available Bonuses</label>
-	<select id="selBonuses" name="selBonuses">
-	    
-	</select>
+	<select id="selBonuses" name="selBonuses"></select>
+	<br>
 	<input type="button" id="btnSubmit" value="Next" onclick="javascript:getNextRoll();" hidden="true" />
 	<br>
 	<noscript>
