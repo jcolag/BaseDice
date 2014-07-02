@@ -11,6 +11,7 @@ namespace NonRazorWeb.Controllers
         using System;
         using System.Collections.Generic;
         using System.Linq;
+        using System.Text.RegularExpressions;
         using System.Web;
         using System.Web.Mvc;
         using System.Web.Mvc.Ajax;
@@ -21,11 +22,6 @@ namespace NonRazorWeb.Controllers
         /// </summary>
         public class HomeController : Controller
         {
-                /// <summary>
-                /// The player.
-                /// </summary>
-                private PlayerFile player = null;
-
                 /// <summary>
                 /// Controller for the front page.
                 /// </summary>
@@ -57,7 +53,9 @@ namespace NonRazorWeb.Controllers
                 [HttpPost]
                 public ActionResult Index(HttpPostedFileBase file)
                 {
-                        if (this.Session == null)
+                        HttpSessionStateBase session = this.Session;
+
+                        if (session == null)
                         {
                                 throw new ObjectDisposedException(GetType().Name);
                         }
@@ -66,7 +64,7 @@ namespace NonRazorWeb.Controllers
                         {
                                 var document = new System.Xml.XmlDocument();
                                 document.Load(file.InputStream);
-                                this.player = new PlayerFile(document);
+                                session["Player"] = new PlayerFile(document);
                         }
 
                         return this.RedirectToAction("Next");
@@ -122,7 +120,20 @@ namespace NonRazorWeb.Controllers
                 [AcceptVerbs(HttpVerbs.Get)]
                 public ActionResult Bonuses()
                 {
-                        this.Response.Write("-;Steal Base;Walk");
+                        string list = "-";
+
+                        PlayerFile player = (PlayerFile)this.Session["Player"];
+
+                        if (player != null)
+                        {
+                                foreach (PlayerBoost b in player.Bonuses)
+                                {
+                                        list += ";" + b.ToString();
+                                }
+                        }
+
+                        list = Regex.Replace(list, "(\\B[A-Z])", " $1");
+                        this.Response.Write(list);
                         return null;
                 }
 
@@ -223,6 +234,7 @@ namespace NonRazorWeb.Controllers
                         }
                         else
                         {
+                                var player = (PlayerFile)session["Player"];
                                 string param = (string)Request.Params["bonus"];
                                 PlayerBoost bonus = PlayerBoost.Nothing;
                                 if (!string.IsNullOrWhiteSpace(param))
@@ -231,6 +243,7 @@ namespace NonRazorWeb.Controllers
                                 }
 
                                 s = g.TakeTurn(bonus);
+                                player.Remove(bonus);
                         }
 
                         return s;

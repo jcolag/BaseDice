@@ -30,7 +30,7 @@ namespace BaseDice
                                 return;
                         }
 
-                        XmlDocument doc = (XmlDocument)xml;
+                        var doc = (XmlDocument)xml;
                         XmlNodeList bonusList = doc.GetElementsByTagName("Bonus");
                         foreach (XmlNode bonus in bonusList)
                         {

@@ -51,7 +51,7 @@ Among other things...
 
  - [X] Web interface.
 
- - [ ] Some way of distinguishing good teams/players from bad, possibly related to interactivity, somehow.  For example, a player could choose to employ some (earned) tactic at each at-bat that alters the probabilities.  (The bonuses can add strategy and be affixed to the player rather than simply allowing them.)
+ - [X] Some way of distinguishing good teams/players from bad, possibly related to interactivity, somehow.  For example, a player could choose to employ some (earned) tactic at each at-bat that alters the probabilities.  (The bonuses can add strategy and be affixed to the player rather than simply allowing them.)
 
  - [ ] Change the rules to better fit the Craps paradigm.  As mentioned, I don't know much about either game, but I'm still uncomfortable with crapping out advancing all the runners on bases.
 
