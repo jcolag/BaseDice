@@ -45,6 +45,23 @@ namespace NonRazorWeb.Controllers
                 }
 
                 /// <summary>
+                /// Handle start button from front page.
+                /// </summary>
+                /// <returns>The view.</returns>
+                /// <param name="file">Uploaded player file.</param>
+                [HttpPost]
+                public ActionResult Index(HttpPostedFileBase file)
+                {
+                        if (file != null && file.ContentLength > 0 && file.ContentType == "text/xml")
+                        {
+                                var document = new System.Xml.XmlDocument();
+                                document.Load(file.InputStream);
+                        }
+
+                        return RedirectToAction("Next");
+                }
+
+                /// <summary>
                 /// Controller for the next page.
                 /// </summary>
                 /// <returns>The next view.</returns>
