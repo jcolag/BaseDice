@@ -9,7 +9,7 @@
 	    var selected = getBonus();
 		var URL = "/Home/Roll" + selected;
 		$.get(URL, function(data) {
-			$("#Result").html(data);
+			$("#Result").html("<p>\n" + data + "\n</p>\n");
 			var lines = data.split("<br>");
 			$.each(lines, function(i, val) {
 				data = data.replace("<br><br>", "<br>");
@@ -19,6 +19,9 @@
 		});
 		setBonuses();
 		$('html, body').scrollTop($(document).height());
+		var flash = "<div class='flash'></div>";
+		$("#Result").prepend(flash);
+		$('.flash').show().fadeOut('slow');
 	}
 	function setBonuses () {
 		URL = "/Home/Bonuses/";
@@ -46,7 +49,9 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" ID="MainContentContent" runat="server">
 	<div id="Result">
-	    <%= ViewData["Message"] %>
+	    <p>
+	        <%= ViewData["Message"] %>
+	    </p>
 	</div>
 	<div id="Controls">
 		<br>
