@@ -22,6 +22,11 @@ namespace NonRazorWeb.Controllers
         public class HomeController : Controller
         {
                 /// <summary>
+                /// The player.
+                /// </summary>
+                private PlayerFile player = null;
+
+                /// <summary>
                 /// Controller for the front page.
                 /// </summary>
                 /// <returns>The view.</returns>
@@ -52,13 +57,19 @@ namespace NonRazorWeb.Controllers
                 [HttpPost]
                 public ActionResult Index(HttpPostedFileBase file)
                 {
+                        if (this.Session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
                         if (file != null && file.ContentLength > 0 && file.ContentType == "text/xml")
                         {
                                 var document = new System.Xml.XmlDocument();
                                 document.Load(file.InputStream);
+                                this.player = new PlayerFile(document);
                         }
 
-                        return RedirectToAction("Next");
+                        return this.RedirectToAction("Next");
                 }
 
                 /// <summary>
