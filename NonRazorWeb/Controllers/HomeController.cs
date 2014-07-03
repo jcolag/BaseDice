@@ -243,7 +243,10 @@ namespace NonRazorWeb.Controllers
                                 }
 
                                 s = g.TakeTurn(bonus);
-                                player.Remove(bonus);
+                                if (player != null)
+                                {
+                                        player.Remove(bonus);
+                                }
                         }
 
                         return s;
