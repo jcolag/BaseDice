@@ -107,6 +107,7 @@ namespace BaseDice
                 public string TakeTurn(PlayerBoost bonus)
                 {
                         int rollTotal = 0;
+                        int oldHits = this.hits;
                         string report = string.Empty;
                         string nl = Environment.NewLine;
                         bool inning = false;
@@ -195,8 +196,11 @@ namespace BaseDice
                                 switch (bonus)
                                 {
                                 case PlayerBoost.Walk:
-                                        this.bases[0].Land();
-                                        report += nl + "Batter walks." + nl;
+                                        if (oldHits == this.hits)
+                                        {
+                                                this.bases[0].Land();
+                                                report += nl + "Batter walks." + nl;
+                                        }
                                         break;
                                 case PlayerBoost.StealBase:
                                         // Advance the furthest runner along.
