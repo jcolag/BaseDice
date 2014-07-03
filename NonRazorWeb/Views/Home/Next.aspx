@@ -1,9 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage" MasterPageFile="~/Views/Shared/BaseDice.master" %>
 <asp:Content ContentPlaceHolderID="Scripts" ID="Scripts" runat="server">
+	<!--
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
+	-->
     <script type="text/javascript">
 	$(document).ready(function() {
 		$("#btnSubmit").removeAttr("hidden");
 		setBonuses();
+		//SC.initialize({
+		//	client_id: 'YOUR_APP_ID'
+		//});
+		//var track_url = 'https://soundcloud.com/madebyrobot/ucreate-music-sample-track';
+		//SC.oEmbed(track_url, { auto_play: true }, function(oEmbed) {
+		//	console.log('oEmbed response: ' + oEmbed);
+		//});
 	});
 	function getNextRoll() {
 	    var selected = getBonus();
