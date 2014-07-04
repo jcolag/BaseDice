@@ -201,6 +201,7 @@ namespace BaseDice
                                                 this.bases[0].Land();
                                                 report += nl + "Batter walks." + nl;
                                         }
+
                                         break;
                                 case PlayerBoost.StealBase:
                                         // Advance the furthest runner along.
@@ -246,12 +247,7 @@ namespace BaseDice
                 /// <returns>The roll.</returns>
                 public Collection<int> LastRoll()
                 {
-                        if (this.roll == null)
-                        {
-                                return new Collection<int>();
-                        }
-
-                        return new Collection<int>(this.roll);
+                        return this.roll == null ? new Collection<int>() : new Collection<int>(this.roll);
                 }
 
                 /// <summary>
