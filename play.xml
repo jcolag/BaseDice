@@ -1,0 +1,5 @@
+<Player Name="John">
+  <Bonus Name="StealBase" />
+  <Bonus Name="Walk" />
+</Player>
+
