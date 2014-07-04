@@ -38,6 +38,8 @@ It definitely works in MonoDevelop. It almost certainly works in SharpDevelop. I
 
 Obviously, that needs testing.
 
+At this time, I have not been able to get a viable, modern ASP.NET environment under Apache on Ubuntu.  IIS would probably be better, but is not on hand.
+
 Future
 ------
 
@@ -57,6 +59,14 @@ Among other things...
 
  - [ ] In fact, the rules should be factored out into configuration.  Hardcoding them is seriously ugly, though since many are logic connections, that may prove difficult.
 
+ - [ ] Trying to add music to the game via SoundCloud's API turned out to be non-trivial due to [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing) restrictions and [XSP](https://en.wikipedia.org/wiki/XSP_%28software%29)'s low-end architecture.  Trying to install an up-to-date Mono on Apache turned out to be...non-trivial, as well.  The most basic code is in-place if anybody wants to test and expand it, and I have a list of tracks that seem appropriate, but for now, this will have to wait.
+
+- [ ] Now that we have player files, the bonuses should perhaps be encrypted with "umpires"' private keys on a per-bonus basis.
+
+- [ ] The game might also consider awarding bonuses based on performance.
+
+- [ ] The game has become almost entirely baseball.  A gambling mechanic that combines both the score and the craps side of the game might rebalance it.
+
 Credits
 -------
 
@@ -67,3 +77,18 @@ The shortcut icon is a combination of pianoBrad's [Baseball](https://openclipart
 The fonts, to the extent they're interesting, are [Playball](https://www.google.com/fonts/specimen/Playball) by TypeSETit and [Exo 2](https://www.google.com/fonts/specimen/Exo+2) by Natanael Gama.
 
 The dynamic page updates are handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.
+
+###Music (Future Credits)###
+
+As mentioned in the to-dos, a nice touch would be background music, which appears possible through [SoundCloud](https://soundcloud.com/) assuming the CORS issue can be overcome.  On the chance anybody wants to tinker, the tracks I found with a baseball tag that seemed to be high-quality (whether or not I actually liked them) include, in no particular order:
+
+- [Size 10 (Original Mix)](https://soundcloud.com/ottoblucker/otto-bl-cker-size-10-original)
+- [Ucreate Music Sample Track](https://soundcloud.com/madebyrobot/ucreate-music-sample-track)
+- [Kracker Jaxx](https://soundcloud.com/jk-harris/krackerjaxx)
+- [The Cheesy](https://soundcloud.com/ob3ple/the-cheesy-1)
+- [Lulzy Baseball](https://soundcloud.com/lightningdude/lulzy-baseball)
+- [Imaginary Baseball](https://soundcloud.com/tnyfrrro/imaginary-baseball)
+- [Baseball](https://soundcloud.com/acloudintrousers/baseball)
+
+The other criteria was what you might consider an All-Ages rating.  Profanity disqualified quite a few.  Hopefully, none slipped into this batch.
+
