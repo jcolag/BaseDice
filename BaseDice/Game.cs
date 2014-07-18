@@ -203,7 +203,7 @@ namespace BaseDice
 
                         if (inning)
                         {
-                                inningRuns = runs;
+                                this.inningRuns = this.runs;
                         }
                         else
                         {
@@ -252,7 +252,7 @@ namespace BaseDice
                 /// <returns>True if the game still has outs remaining.</returns>
                 public bool Done()
                 {
-                        return this.outs >= Inning * Length;
+                        return this.outs >= Game.Inning * Game.Length;
                 }
 
                 /// <summary>
@@ -261,7 +261,7 @@ namespace BaseDice
                 /// <returns>The inning.</returns>
                 public int WhatInning()
                 {
-                        return this.outs / Game.Inning + 1;
+                        return (this.outs / Game.Inning) + 1;
                 }
 
                 /// <summary>

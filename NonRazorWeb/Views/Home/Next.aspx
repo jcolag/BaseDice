@@ -84,7 +84,7 @@
 		<%=Html.ActionLink("Next", "Next") %>
 		</noscript>
 		<br>
-		<table>
+		<table id="ScoreBoard">
 		    <tr>
 		        <th>&nbsp;</th>
 		        <th>1</th>

@@ -113,6 +113,10 @@ namespace NonRazorWeb.Controllers
                         return null;
                 }
 
+                /// <summary>
+                /// Controller for the score partial page.
+                /// </summary>
+                /// <returns>The next view.</returns>
                 [AcceptVerbs(HttpVerbs.Get)]
                 public ActionResult Score()
                 {
