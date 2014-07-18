@@ -19,6 +19,11 @@ namespace BaseDice
                 private const int Inning = 3;
 
                 /// <summary>
+                /// The number of innings per game.
+                /// </summary>
+                private const int Length = 9;
+
+                /// <summary>
                 /// The random number generator.
                 /// </summary>
                 private Random rand = new Random();
@@ -238,7 +243,7 @@ namespace BaseDice
                 /// <returns>True if the game still has outs remaining.</returns>
                 public bool Done()
                 {
-                        return this.outs >= 27;
+                        return this.outs >= Inning * Length;
                 }
 
                 /// <summary>
