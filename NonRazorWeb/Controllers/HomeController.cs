@@ -113,6 +113,24 @@ namespace NonRazorWeb.Controllers
                         return null;
                 }
 
+                [AcceptVerbs(HttpVerbs.Get)]
+                public ActionResult Score()
+                {
+                        HttpSessionStateBase session = this.Session;
+                        Game game;
+                        string resp;
+
+                        if (session == null)
+                        {
+                                throw new ObjectDisposedException(GetType().Name);
+                        }
+
+                        game = (Game)session["Game"];
+                        resp = game.WhatInning().ToString() + "," + game.InningScore().ToString();
+                        Response.Write(resp);
+                        return null;
+                }
+
                 /// <summary>
                 /// Returns bonuses for the player (stub).
                 /// </summary>

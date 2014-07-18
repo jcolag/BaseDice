@@ -32,6 +32,7 @@
 		var flash = "<div class='flash'></div>";
 		$("#Result").prepend(flash);
 		$('.flash').show().fadeOut('slow');
+		setScore();
 	}
 	function setBonuses () {
 		URL = "/Home/Bonuses/";
@@ -55,6 +56,15 @@
 	    }
 	    return selected;
 	}
+	function setScore () {
+		var URL = "/Home/Score";
+		$.get(URL, function(data) {
+		    var parts = data.split(",");
+		    var inning = parts[0];
+		    var score = parts[1];
+		    $("#inning_" + inning).html(score);
+		});
+	}
 	</script>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" ID="MainContentContent" runat="server">
@@ -73,6 +83,33 @@
 		<noscript>
 		<%=Html.ActionLink("Next", "Next") %>
 		</noscript>
+		<br>
+		<table>
+		    <tr>
+		        <th>&nbsp;</th>
+		        <th>1</th>
+		        <th>2</th>
+		        <th>3</th>
+		        <th>4</th>
+		        <th>5</th>
+		        <th>6</th>
+		        <th>7</th>
+		        <th>8</th>
+		        <th>9</th>
+		    </tr>
+		    <tr>
+				<td>Player</td>
+				<td id="inning_1">&mdash;</td>
+				<td id="inning_2">&mdash;</td>
+				<td id="inning_3">&mdash;</td>
+				<td id="inning_4">&mdash;</td>
+				<td id="inning_5">&mdash;</td>
+				<td id="inning_6">&mdash;</td>
+				<td id="inning_7">&mdash;</td>
+				<td id="inning_8">&mdash;</td>
+				<td id="inning_9">&mdash;</td>
+		    </tr>
+		</table>
 	</div>
 	<div id="History">
 		<%= ViewData["History"] %>

@@ -59,6 +59,11 @@ namespace BaseDice
                 private int runs;
 
                 /// <summary>
+                /// The score up through the last inning.
+                /// </summary>
+                private int inningRuns;
+
+                /// <summary>
                 /// The number of hits.
                 /// </summary>
                 private int hits;
@@ -196,7 +201,11 @@ namespace BaseDice
 
                         this.lastouts = this.outs;
 
-                        if (!inning)
+                        if (inning)
+                        {
+                                inningRuns = runs;
+                        }
+                        else
                         {
                                 switch (bonus)
                                 {
@@ -244,6 +253,24 @@ namespace BaseDice
                 public bool Done()
                 {
                         return this.outs >= Inning * Length;
+                }
+
+                /// <summary>
+                /// Returns the current inning number.
+                /// </summary>
+                /// <returns>The inning.</returns>
+                public int WhatInning()
+                {
+                        return this.outs / Game.Inning + 1;
+                }
+
+                /// <summary>
+                /// Returns the inning's score.
+                /// </summary>
+                /// <returns>The score.</returns>
+                public int InningScore()
+                {
+                        return this.runs - this.inningRuns;
                 }
 
                 /// <summary>
