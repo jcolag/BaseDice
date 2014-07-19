@@ -43,7 +43,7 @@
 		        <th>9</th>
 		    </tr>
 		    <tr>
-				<td>Player</td>
+				<th>Player</th>
 				<td id="inning_1">&mdash;</td>
 				<td id="inning_2">&mdash;</td>
 				<td id="inning_3">&mdash;</td>

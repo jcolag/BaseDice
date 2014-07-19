@@ -89,7 +89,7 @@ div.flash {
   -o-border-radius: 1em;
   -ms-border-radius: 1em;
 }
-td {
+td, th {
   border: 1px black solid;
   width: 1.5em;
   text-align: center;
