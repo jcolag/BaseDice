@@ -205,7 +205,7 @@ namespace BaseDice
                         if (inning)
                         {
                                 int curr = (this.outs / Game.Inning) + 1;
-                                var total = CurrentRuns(curr);
+                                var total = this.CurrentRuns(curr);
 
                                 if (this.outs > 0)
                                 {
@@ -291,6 +291,7 @@ namespace BaseDice
                         {
                                 return 0;
                         }
+
                         return (int)this.inningRuns[inn];
                 }
 
@@ -330,22 +331,6 @@ namespace BaseDice
                                 (this.hits == 1 ? string.Empty : "s") + ".  " +
                                 this.errors.ToString() + " error" +
                                 (this.errors == 1 ? string.Empty : "s") + ".";
-                }
-
-                /// <summary>
-                /// Counts the runs for the current inning.
-                /// </summary>
-                /// <returns>The runs.</returns>
-                /// <param name="curr">Current inning.</param>
-                private int CurrentRuns(int curr)
-                {
-                        int total = 0;
-                        for (int inn = 1; inn < curr - 1; inn++)
-                        {
-                                total += (int)this.inningRuns[inn + 1];
-                        }
-
-                        return this.runs - total;
                 }
 
                 /// <summary>
@@ -423,6 +408,22 @@ namespace BaseDice
                         }
 
                         return res;
+                }
+
+                /// <summary>
+                /// Counts the runs for the current inning.
+                /// </summary>
+                /// <returns>The runs.</returns>
+                /// <param name="curr">Current inning.</param>
+                private int CurrentRuns(int curr)
+                {
+                        int total = 0;
+                        for (int inn = 1; inn < curr - 1; inn++)
+                        {
+                                total += (int)this.inningRuns[inn + 1];
+                        }
+
+                        return this.runs - total;
                 }
 
                 /// <summary>
