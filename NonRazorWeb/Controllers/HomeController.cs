@@ -79,6 +79,8 @@ namespace NonRazorWeb.Controllers
                 {
                         HttpSessionStateBase session = this.Session;
                         ViewDataDictionary viewdata = this.ViewData;
+                        Game game = (Game)session["Game"];
+                        int runs;
 
                         if (session == null)
                         {
@@ -91,6 +93,13 @@ namespace NonRazorWeb.Controllers
                         viewdata["History"] = html;
                         message += HomeController.BreakPadding(message, 8);
                         viewdata["Message"] = message;
+
+                        for (int i = 1; i <= 9; i++)
+                        {
+                                runs = game.InningScore(i);
+                                viewdata["Inning_" + i.ToString()] = runs > 0 ? runs.ToString() : "-";
+                        }
+
                         return this.View();
                 }
 

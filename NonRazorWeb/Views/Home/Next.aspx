@@ -44,15 +44,15 @@
 		    </tr>
 		    <tr>
 				<th>Player</th>
-				<td id="inning_1">&mdash;</td>
-				<td id="inning_2">&mdash;</td>
-				<td id="inning_3">&mdash;</td>
-				<td id="inning_4">&mdash;</td>
-				<td id="inning_5">&mdash;</td>
-				<td id="inning_6">&mdash;</td>
-				<td id="inning_7">&mdash;</td>
-				<td id="inning_8">&mdash;</td>
-				<td id="inning_9">&mdash;</td>
+				<td id="inning_1"><%= ViewData["Inning_1"] %></td>
+				<td id="inning_2"><%= ViewData["Inning_2"] %></td>
+				<td id="inning_3"><%= ViewData["Inning_3"] %></td>
+				<td id="inning_4"><%= ViewData["Inning_4"] %></td>
+				<td id="inning_5"><%= ViewData["Inning_5"] %></td>
+				<td id="inning_6"><%= ViewData["Inning_6"] %></td>
+				<td id="inning_7"><%= ViewData["Inning_7"] %></td>
+				<td id="inning_8"><%= ViewData["Inning_8"] %></td>
+				<td id="inning_9"><%= ViewData["Inning_9"] %></td>
 		    </tr>
 		</table>
 	</div>
