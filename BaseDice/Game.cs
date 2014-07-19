@@ -5,6 +5,7 @@
 namespace BaseDice
 {
         using System;
+        using System.Collections;
         using System.Collections.Generic;
         using System.Collections.ObjectModel;
 
@@ -61,7 +62,7 @@ namespace BaseDice
                 /// <summary>
                 /// The score up through the last inning.
                 /// </summary>
-                private int inningRuns;
+                private Hashtable inningRuns = new Hashtable();
 
                 /// <summary>
                 /// The number of hits.
@@ -203,7 +204,18 @@ namespace BaseDice
 
                         if (inning)
                         {
-                                this.inningRuns = this.runs;
+                                int total = 0;
+                                int curr = (this.outs / Game.Inning) + 1;
+
+                                for (int inn = 1; inn < curr - 1; inn++)
+                                {
+                                        total += (int)this.inningRuns[inn + 1];
+                                }
+
+                                if (this.outs > 0)
+                                {
+                                        this.inningRuns.Add(curr, this.runs - total);
+                                }
                         }
                         else
                         {
@@ -270,7 +282,21 @@ namespace BaseDice
                 /// <returns>The score.</returns>
                 public int InningScore()
                 {
-                        return this.runs - this.inningRuns;
+                        return this.InningScore((this.outs / Game.Inning) + 1);
+                }
+
+                /// <summary>
+                /// Innings the score.
+                /// </summary>
+                /// <returns>The score.</returns>
+                /// <param name="inn">The current inning.</param>
+                public int InningScore(int inn)
+                {
+                        if (!this.inningRuns.ContainsKey(inn))
+                        {
+                                return 0;
+                        }
+                        return (int)this.inningRuns[inn];
                 }
 
                 /// <summary>
