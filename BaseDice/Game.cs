@@ -247,8 +247,6 @@ namespace BaseDice
 
                         if (this.outs > 0)
                         {
-                                " / " + curr.ToString());
-
                                 var total = this.CurrentRuns(curr);
                                 this.inningRuns[curr] = total;
                         }
@@ -294,6 +292,10 @@ namespace BaseDice
                         if (!this.inningRuns.ContainsKey(inn))
                         {
                                 return -1;
+                        }
+                        else if (inn == 0)
+                        {
+                                return this.runs;
                         }
 
                         return (int)this.inningRuns[inn];
