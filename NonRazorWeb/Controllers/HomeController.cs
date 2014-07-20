@@ -132,6 +132,8 @@ namespace NonRazorWeb.Controllers
                         HttpSessionStateBase session = this.Session;
                         Game game;
                         string resp;
+                        string[] pathParts = Request.Path.Split("/".ToArray());
+                        int which = 0;
 
                         if (session == null)
                         {
@@ -139,7 +141,22 @@ namespace NonRazorWeb.Controllers
                         }
 
                         game = (Game)session["Game"];
-                        resp = game.WhatInning().ToString() + "," + game.InningScore().ToString();
+                        if (pathParts.Length <= 2)
+                        {
+                                which = game.WhatInning();
+                        }
+                        else
+                        {
+                                try
+                                {
+                                        int.TryParse(pathParts[3], out which);
+                                }
+                                catch (ArgumentException)
+                                {
+                                }
+                        }
+
+                        resp = which.ToString() + "," + game.InningScore(which).ToString();
                         Response.Write(resp);
                         return null;
                 }
