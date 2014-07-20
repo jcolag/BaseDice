@@ -49,11 +49,16 @@ function getBonus () {
     return selected;
 }
 function setScore () {
-	var URL = "/Home/Score";
-	$.get(URL, function(data) {
-	    var parts = data.split(",");
-	    var inning = parts[0];
-	    var score = parts[1];
-	    $("#inning_" + inning).html(score);
-	});
+	var URL = "/Home/Score/";
+	for(i = 1; i <= 9; i++) {
+		$.get(URL + i, function(data) {
+		    var parts = data.split(",");
+	        var inning = parts[0];
+	        var score = parts[1];
+	        if (score == -1) {
+	            score = "&mdash;";
+	        }
+		    $("#inning_" + inning).html(score);
+		});
+	}
 }
