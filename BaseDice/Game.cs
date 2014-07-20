@@ -119,6 +119,7 @@ namespace BaseDice
                 {
                         int rollTotal = 0;
                         int oldHits = this.hits;
+                        int curr = (this.outs / Game.Inning) + 1;
                         string report = string.Empty;
                         string nl = Environment.NewLine;
                         bool inning = false;
@@ -202,17 +203,7 @@ namespace BaseDice
 
                         this.lastouts = this.outs;
 
-                        if (inning)
-                        {
-                                int curr = (this.outs / Game.Inning) + 1;
-                                var total = this.CurrentRuns(curr);
-
-                                if (this.outs > 0)
-                                {
-                                        this.inningRuns.Add(curr, this.runs - total);
-                                }
-                        }
-                        else
+                        if (!inning)
                         {
                                 switch (bonus)
                                 {
@@ -247,6 +238,20 @@ namespace BaseDice
                                                 "bonus",
                                                 "Impossible bonus passed");
                                 }
+                        }
+
+                        if (!this.inningRuns.ContainsKey(curr))
+                        {
+                                this.inningRuns.Add(curr, 0);
+                        }
+
+                        if (this.outs > 0)
+                        {
+                                Console.WriteLine("[" + this.outs.ToString() + " / " + inning.ToString() +
+                                " / " + curr.ToString());
+
+                                var total = this.CurrentRuns(curr);
+                                this.inningRuns[curr] = total;
                         }
 
                         return runners +
@@ -289,7 +294,7 @@ namespace BaseDice
                 {
                         if (!this.inningRuns.ContainsKey(inn))
                         {
-                                return 0;
+                                return -1;
                         }
 
                         return (int)this.inningRuns[inn];
