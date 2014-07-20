@@ -247,7 +247,6 @@ namespace BaseDice
 
                         if (this.outs > 0)
                         {
-                                Console.WriteLine("[" + this.outs.ToString() + " / " + inning.ToString() +
                                 " / " + curr.ToString());
 
                                 var total = this.CurrentRuns(curr);
