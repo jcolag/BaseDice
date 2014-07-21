@@ -50,7 +50,7 @@ function getBonus () {
 }
 function setScore () {
 	var URL = "/Home/Score/";
-	for(i = 1; i <= 9; i++) {
+	for(i = 0; i <= 9; i++) {
 		$.get(URL + i, function(data) {
 		    var parts = data.split(",");
 	        var inning = parts[0];

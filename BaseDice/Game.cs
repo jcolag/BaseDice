@@ -289,13 +289,13 @@ namespace BaseDice
                 /// <param name="inn">The current inning.</param>
                 public int InningScore(int inn)
                 {
-                        if (!this.inningRuns.ContainsKey(inn))
-                        {
-                                return -1;
-                        }
-                        else if (inn == 0)
+                        if (inn == 0)
                         {
                                 return this.runs;
+                        }
+                        else if (!this.inningRuns.ContainsKey(inn))
+                        {
+                                return -1;
                         }
 
                         return (int)this.inningRuns[inn];

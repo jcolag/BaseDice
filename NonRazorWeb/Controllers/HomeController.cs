@@ -94,10 +94,10 @@ namespace NonRazorWeb.Controllers
                         message += HomeController.BreakPadding(message, 8);
                         viewdata["Message"] = message;
 
-                        for (int i = 1; i <= 9; i++)
+                        for (int i = 0; i <= 9; i++)
                         {
                                 runs = game.InningScore(i);
-                                viewdata["Inning_" + i.ToString()] = runs > 0 ? runs.ToString() : "-";
+                                viewdata["Inning_" + i.ToString()] = runs > 0 ? runs.ToString() : "&mdash;";
                         }
 
                         return this.View();

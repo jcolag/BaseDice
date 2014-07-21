@@ -41,6 +41,7 @@
 		        <th>7</th>
 		        <th>8</th>
 		        <th>9</th>
+		        <th>#</th>
 		    </tr>
 		    <tr>
 				<th>Player</th>
@@ -53,6 +54,7 @@
 				<td id="inning_7"><%= ViewData["Inning_7"] %></td>
 				<td id="inning_8"><%= ViewData["Inning_8"] %></td>
 				<td id="inning_9"><%= ViewData["Inning_9"] %></td>
+				<th id="inning_0"><%= ViewData["Inning_0"] %></th>
 		    </tr>
 		</table>
 	</div>
