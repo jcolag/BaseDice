@@ -35,9 +35,9 @@ namespace BaseDice
                 private Die[] dice = new Die[2];
 
                 /// <summary>
-                /// The bases.
+                /// The playing field.
                 /// </summary>
-                private Base[] bases = new Base[4];
+                private Field field;
 
                 /// <summary>
                 /// The point.
@@ -94,11 +94,16 @@ namespace BaseDice
                                 this.dice[die] = new Die(this.rand);
                         }
 
-                        this.bases[3] = new Base(null, "Home Plate");
-                        this.bases[2] = new Base(this.bases[3], "Third Base");
-                        this.bases[1] = new Base(this.bases[2], "Second Base");
-                        this.bases[0] = new Base(this.bases[1], "First Base");
-                        this.bases[3].SetRun(this.Run);
+                        this.field = new Field(this.Run);
+                }
+
+                /// <summary>
+                /// Return this instance's diamond code.
+                /// </summary>
+                /// <returns>Diamond code.</returns>
+                public string Diamond()
+                {
+                        return this.field.Diamond();
                 }
 
                 /// <summary>
@@ -195,10 +200,7 @@ namespace BaseDice
 
                                 report += " inning over! *";
                                 inning = true;
-                                foreach (Base b in this.bases)
-                                {
-                                        b.Clear();
-                                }
+                                this.field.Clear();
                         }
 
                         this.lastouts = this.outs;
@@ -210,23 +212,19 @@ namespace BaseDice
                                 case PlayerBoost.Walk:
                                         if (oldHits == this.hits)
                                         {
-                                                this.bases[0].Land();
+                                                this.field.AddRunner();
                                                 report += nl + "Batter walks." + nl;
                                         }
 
                                         break;
                                 case PlayerBoost.StealBase:
                                         // Advance the furthest runner along.
-                                        for (int i = this.bases.Length - 1; i >= 0; i--)
+                                        int whichBase = this.field.Steal();
+                                        if (whichBase > 0)
                                         {
-                                                if (this.bases[i].HasRunner)
-                                                {
-                                                        this.bases[i].Advance();
-                                                        report += nl + "Runner on " + (i + 1).ToString() +
-                                                        Ordinal(i + 1) + " steals " +
-                                                        this.bases[i + 1].Name + "!" + nl;
-                                                        break;
-                                                }
+                                                report += nl + "Runner on " + whichBase.ToString() +
+                                                        Ordinal(whichBase) + " steals " +
+                                                        this.field.Name(whichBase) + "!" + nl;
                                         }
 
                                         break;
@@ -308,21 +306,6 @@ namespace BaseDice
                 public Collection<int> LastRoll()
                 {
                         return this.roll == null ? new Collection<int>() : new Collection<int>(this.roll);
-                }
-
-                /// <summary>
-                /// Report the state of the bases.
-                /// </summary>
-                /// <returns>String where each character is 1 if a runner is on-base.</returns>
-                public string Diamond()
-                {
-                        string coll = string.Empty;
-                        foreach (Base b in this.bases)
-                        {
-                                coll = (b.HasRunner ? "1" : "0") + coll;
-                        }
-
-                        return coll;
                 }
 
                 /// <summary>
@@ -449,17 +432,15 @@ namespace BaseDice
 
                         if (dieRolls[0] == dieRolls[1])
                         {
-                                this.bases[2].Advance();
-                                this.bases[1].Advance();
-                                this.bases[0].Advance();
-                                this.bases[0].Land();
+                                this.field.AdvanceAll();
+                                this.field.Single();
                                 ++this.hits;
                                 report = "Advance all bases";
                         }
                         else if (rollTotal == 3)
                         {
-                                this.bases[0].Land();
-                                if (this.bases[2].Advance())
+                                this.field.Single();
+                                if (this.field.Advance(2))
                                 {
                                         report = "Advance to home";
                                 }
@@ -472,7 +453,7 @@ namespace BaseDice
                         }
                         else if (new List<int>() { 4, 5, 9, 10 }.Contains(rollTotal))
                         {
-                                if (this.bases[0].Advance())
+                                if (this.field.Advance(0))
                                 {
                                         report = "Advance to second";
                                 }
@@ -481,12 +462,12 @@ namespace BaseDice
                                         report = "Single";
                                 }
 
-                                this.bases[0].Land();
+                                this.field.Single();
                                 ++this.hits;
                         }
                         else if (rollTotal == 6 || rollTotal == 8)
                         {
-                                if (this.bases[1].Advance())
+                                if (this.field.Advance(1))
                                 {
                                         report = "Advance to third";
                                 }
@@ -495,7 +476,7 @@ namespace BaseDice
                                         report = "Single";
                                 }
 
-                                this.bases[0].Land();
+                                this.field.Single();
                                 ++this.hits;
                         }
                         else if (rollTotal == 7)
@@ -540,50 +521,43 @@ namespace BaseDice
                         }
                         else if (dieRolls[0] == 5 && dieRolls[1] == 5)
                         {
-                                this.bases[0].Land();
-                                this.bases[0].Advance();
-                                this.bases[1].Advance();
+                                this.field.Triple();
                                 ++this.hits;
                                 report = "Triple";
                         }
                         else if (dieRolls[0] == 3 && dieRolls[1] == 3)
                         {
-                                this.bases[0].Error();
+                                this.field.Error();
                                 ++this.errors;
                                 report = "Error";
                         }
                         else if (dieRolls[0] == dieRolls[1])
                         {
-                                this.bases[0].Land();
+                                this.field.Single();
                                 ++this.errors;
                                 report = "Error";
                         }
                         else if (rollTotal == 5)
                         {
-                                this.bases[0].Land();
-                                this.bases[0].Advance();
+                                this.field.Double();
                                 ++this.hits;
                                 report = "Double (standard)";
                         }
                         else if (new List<int>() { 4, 6, 10 }.Contains(rollTotal))
                         {
-                                this.bases[0].Land();
+                                this.field.Single();
                                 ++this.hits;
                                 report = "Single (standard)";
                         }
                         else if (rollTotal == 8)
                         {
-                                this.bases[0].Land();
-                                this.bases[0].Advance();
-                                this.bases[1].Advance();
-                                this.bases[2].Advance();
+                                this.field.HomeRun();
                                 ++this.hits;
                                 report = "Home Run";
                         }
                         else if (rollTotal == 9)
                         {
-                                this.bases[0].Land();
-                                this.bases[0].Advance();
+                                this.field.Double();
                                 ++this.hits;
                                 report = "Double (strong)";
                         }
@@ -614,7 +588,7 @@ namespace BaseDice
 
                         if (rollTotal == 2)
                         {
-                                if (this.bases[1].Out())
+                                if (this.field.Out(1))
                                 {
                                         ++this.outs;
                                         report = "Eliminate player on second";
@@ -626,7 +600,7 @@ namespace BaseDice
                         }
                         else if (rollTotal == 3)
                         {
-                                if (this.bases[2].Out())
+                                if (this.field.Out(2))
                                 {
                                         ++this.outs;
                                         report = "Eliminate player on third";
@@ -647,12 +621,12 @@ namespace BaseDice
                         }
                         else if (rollTotal == 11)
                         {
-                                this.bases[0].Land();
+                                this.field.AddRunner();
                                 report = "Walk";
                         }
                         else if (rollTotal == 12)
                         {
-                                if (this.bases[0].Out())
+                                if (this.field.Out(0))
                                 {
                                         report = "Eliminate man on first";
                                         ++this.outs;
@@ -664,7 +638,7 @@ namespace BaseDice
                         }
                         else if (dieRolls[0] == dieRolls[1])
                         {
-                                this.bases[0].Land();
+                                this.field.Single();
                                 ++this.hits;
                                 report = "Single (strong)";
                         }

@@ -98,14 +98,15 @@ namespace BaseDice
                 /// Advance the runner on the specified base.
                 /// </summary>
                 /// <param name="which">Which base.</param>
-                public void Advance(int which)
+                /// <returns>Player advanced.</returns>
+                public bool Advance(int which)
                 {
                         if (this.bases.GetLowerBound(0) > which || this.bases.GetUpperBound(0) < which)
                         {
-                                return;
+                                return false;
                         }
 
-                        this.bases[which].Advance();
+                        return this.bases[which].Advance();
                 }
 
                 /// <summary>
@@ -121,6 +122,29 @@ namespace BaseDice
                         }
 
                         return this.bases[which].Out();
+                }
+
+                /// <summary>
+                /// Return the specified base's name.
+                /// </summary>
+                /// <param name="which">Which base.</param>
+                /// <returns>The name.</returns>
+                public string Name(int which)
+                {
+                        if (this.bases.GetLowerBound(0) > which || this.bases.GetUpperBound(0) < which)
+                        {
+                                return string.Empty;
+                        }
+
+                        return this.bases[which].Name;
+                }
+
+                /// <summary>
+                /// Error play.
+                /// </summary>
+                public void Error()
+                {
+                        this.bases[0].Error();
                 }
 
                 /// <summary>
