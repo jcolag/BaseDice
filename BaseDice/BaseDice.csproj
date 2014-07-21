@@ -46,6 +46,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="PlayerBoost.cs" />
     <Compile Include="PlayerFile.cs" />
+    <Compile Include="Field.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
