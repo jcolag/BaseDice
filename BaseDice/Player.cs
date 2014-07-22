@@ -108,11 +108,76 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Returns the current inning.
+                /// </summary>
+                /// <returns>The inning.</returns>
+                /// <param name="outsPerInning">Outs per inning.</param>
+                public int CurrentInning(int outsPerInning)
+                {
+                        return (this.outs / outsPerInning) + 1;
+                }
+
+                /// <summary>
+                /// Determines whether this instance is in a new inning.
+                /// </summary>
+                /// <returns><c>true</c> if this instance is new inning the specified outsPerInning; otherwise, <c>false</c>.</returns>
+                /// <param name="outsPerInning">Outs per inning.</param>
+                public bool IsNewInning(int outsPerInning)
+                {
+                        bool candidate = this.outs > 0 &&
+                                this.outs != this.lastouts &&
+                                this.outs % outsPerInning == 0;
+                        this.lastouts = this.outs;
+                        return candidate;
+                }
+
+                /// <summary>
+                /// Tests if there have been any outs.
+                /// </summary>
+                /// <returns><c>true</c>, if outs was anyed, <c>false</c> otherwise.</returns>
+                public bool AnyOuts()
+                {
+                        return this.outs > 0;
+                }
+
+                /// <summary>
+                /// Determines whether this game is over.
+                /// </summary>
+                /// <returns><c>true</c> if this game is over; otherwise, <c>false</c>.</returns>
+                /// <param name="inningsPerGame">Innings per game.</param>
+                /// <param name="outsPerInning">Outs per inning.</param>
+                public bool IsGameOver(int inningsPerGame, int outsPerInning)
+                {
+                        return this.outs >= inningsPerGame * outsPerInning;
+                }
+
+                /// <summary>
                 /// Player has been caught out.
                 /// </summary>
                 public void Out()
                 {
                         ++this.outs;
+                }
+
+                /// <summary>
+                /// Score for the inning.
+                /// </summary>
+                /// <returns>The score.</returns>
+                /// <param name="inn">The current inning.</param>
+                public int InningScore(int inn)
+                {
+                        if (inn == 0)
+                        {
+                                // The whole game.
+                                return this.runs;
+                        }
+                        else if (!this.inningRuns.ContainsKey(inn))
+                        {
+                                // We haven't gotten there, yet.
+                                return -1;
+                        }
+
+                        return (int)this.inningRuns[inn];
                 }
 
                 /// <summary>
