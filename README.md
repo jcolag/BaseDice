@@ -47,7 +47,7 @@ Among other things...
 
  - [ ] There is an intermittent bug on the scoreboard where runs earned at the end of one inning sometimes show in both that inning and the next.
 
- - [ ] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.  Massively multiplayer online baseball...?
+ - [X] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.  Massively multiplayer online baseball...?  (_The architecture no longer requires it._)
 
  - [X] Separating the output into innings might be nice, though scores seem very low as it is.  (_After fixing the craps point system, scores are no longer low._)
 

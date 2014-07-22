@@ -281,21 +281,11 @@ namespace BaseDice
                 }
 
                 /// <summary>
-                /// Add a run.
-                /// </summary>
-                /// <remarks>Use as an Action callback only.</remarks>
-                public void Run()
-                {
-                        ++this.home;
-                        ++this.runs;
-                }
-
-                /// <summary>
                 /// Counts the runs for the current inning.
                 /// </summary>
                 /// <returns>The runs.</returns>
                 /// <param name="curr">Current inning.</param>
-                private int CurrentRuns(int curr)
+                public int CurrentRuns(int curr)
                 {
                         int total = 0;
                         for (int inn = 1; inn < curr - 1; inn++)
@@ -304,6 +294,16 @@ namespace BaseDice
                         }
 
                         return this.runs - total;
+                }
+
+                /// <summary>
+                /// Add a run.
+                /// </summary>
+                /// <remarks>Use as an Action callback only.</remarks>
+                public void Run()
+                {
+                        ++this.home;
+                        ++this.runs;
                 }
         }
 }

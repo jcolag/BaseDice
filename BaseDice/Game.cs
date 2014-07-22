@@ -25,6 +25,16 @@ namespace BaseDice
                 private const int Length = 9;
 
                 /// <summary>
+                /// The playing field.
+                /// </summary>
+                private Field field;
+
+                /// <summary>
+                /// The player.
+                /// </summary>
+                private Player player;
+
+                /// <summary>
                 /// The random number generator.
                 /// </summary>
                 private Random rand = new Random();
@@ -33,51 +43,6 @@ namespace BaseDice
                 /// The dice.
                 /// </summary>
                 private Die[] dice = new Die[2];
-
-                /// <summary>
-                /// The playing field.
-                /// </summary>
-                private Field field;
-
-                /// <summary>
-                /// The point.
-                /// </summary>
-                private int point;
-
-                /// <summary>
-                /// The number of outs.
-                /// </summary>
-                private int outs;
-
-                /// <summary>
-                /// The previous value of outs.
-                /// </summary>
-                private int lastouts = 0;
-
-                /// <summary>
-                /// The player's score.
-                /// </summary>
-                private int runs;
-
-                /// <summary>
-                /// The score up through the last inning.
-                /// </summary>
-                private Hashtable inningRuns = new Hashtable();
-
-                /// <summary>
-                /// The number of hits.
-                /// </summary>
-                private int hits;
-
-                /// <summary>
-                /// The number of errors.
-                /// </summary>
-                private int errors;
-
-                /// <summary>
-                /// The number of runners to cross home that haven't otherwise been processed.
-                /// </summary>
-                private int home;
 
                 /// <summary>
                 /// The roll of the dice.
@@ -94,7 +59,8 @@ namespace BaseDice
                                 this.dice[die] = new Die(this.rand);
                         }
 
-                        this.field = new Field(this.Run);
+                        this.player = new Player();
+                        this.field = new Field(this.player.Run);
                 }
 
                 /// <summary>
@@ -123,8 +89,8 @@ namespace BaseDice
                 public string TakeTurn(PlayerBoost bonus)
                 {
                         int rollTotal = 0;
-                        int oldHits = this.hits;
-                        int curr = (this.outs / Game.Inning) + 1;
+                        int oldHits = this.player.Hits;
+                        int curr = this.player.CurrentInning(Game.Inning);
                         string report = string.Empty;
                         string nl = Environment.NewLine;
                         bool inning = false;
@@ -135,7 +101,7 @@ namespace BaseDice
                                 rollTotal += val;
                         }
 
-                        if (this.point == 0)
+                        if (this.player.Point == 0)
                         {
                                 report = this.TurnNoPoint(this.roll);
                                 if (rollTotal == 12)
@@ -152,23 +118,23 @@ namespace BaseDice
                                 }
                                 else
                                 {
-                                        this.point = rollTotal;
-                                        report = "the point is " + this.point.ToString() + ", " + report;
+                                        this.player.SetPoint(rollTotal);
+                                        report = "the point is " + this.player.Point.ToString() + ", " + report;
                                         report += " (On) ";
                                 }
                         }
                         else
                         {
-                                if (rollTotal == this.point)
+                                if (rollTotal == this.player.Point)
                                 {
                                         report = this.TurnPointMatched(this.roll);
                                         report += " (Hit the point) ";
-                                        this.point = 0;
+                                        this.player.UnsetPoint();
                                 }
                                 else if (rollTotal == 7)
                                 {
                                         report += " (Seven-out) ";
-                                        this.point = 0;
+                                        this.player.UnsetPoint();
                                 }
 
                                 string report2 = this.TurnWithPoint(this.roll);
@@ -182,19 +148,11 @@ namespace BaseDice
                                 }
                         }
 
-                        string runners = string.Empty;
-                        if (this.home > 0)
-                        {
-                                runners = this.home.ToString() + " runner" +
-                                        (this.home == 1 ? string.Empty : "s") +
-                                        " cross" + (this.home == 1 ? "es" : string.Empty) +
-                                                " Home Plate." + nl;
-                                this.home = 0;
-                        }
+                        string runners = this.player.ReportRuns(nl);
 
-                        if (this.outs > 0 && this.outs != this.lastouts && this.outs % Game.Inning == 0)
+                        if (this.player.IsNewInning(Game.Inning))
                         {
-                                int which = this.outs / Game.Inning;
+                                int which = this.player.CurrentInning(Game.Inning) - 1;
                                 report += nl + " * " + which.ToString();
                                 report += Ordinal(which);
 
@@ -203,14 +161,12 @@ namespace BaseDice
                                 this.field.Clear();
                         }
 
-                        this.lastouts = this.outs;
-
                         if (!inning)
                         {
                                 switch (bonus)
                                 {
                                 case PlayerBoost.Walk:
-                                        if (oldHits == this.hits)
+                                        if (oldHits == this.player.Hits)
                                         {
                                                 this.field.AddRunner();
                                                 report += nl + "Batter walks." + nl;
@@ -238,17 +194,8 @@ namespace BaseDice
                                 }
                         }
 
-                        if (!this.inningRuns.ContainsKey(curr))
-                        {
-                                this.inningRuns.Add(curr, 0);
-                        }
-
-                        if (this.outs > 0)
-                        {
-                                var total = this.CurrentRuns(curr);
-                                this.inningRuns[curr] = total;
-                        }
-
+                        this.player.AddInning(curr);
+                        this.player.RunsForInning(curr);
                         return runners +
                                 "Rolled " + DiceTalk(rollTotal, this.roll[0] == this.roll[1]) + ", " + report;
                 }
@@ -259,7 +206,7 @@ namespace BaseDice
                 /// <returns>True if the game still has outs remaining.</returns>
                 public bool Done()
                 {
-                        return this.outs >= Game.Inning * Game.Length;
+                        return this.player.IsGameOver(Game.Inning, Game.Length);
                 }
 
                 /// <summary>
@@ -268,7 +215,7 @@ namespace BaseDice
                 /// <returns>The inning.</returns>
                 public int WhatInning()
                 {
-                        return (this.outs / Game.Inning) + 1;
+                        return this.player.CurrentInning(Game.Inning);
                 }
 
                 /// <summary>
@@ -277,7 +224,7 @@ namespace BaseDice
                 /// <returns>The score.</returns>
                 public int InningScore()
                 {
-                        return this.InningScore((this.outs / Game.Inning) + 1);
+                        return this.InningScore(this.player.CurrentInning(Game.Inning));
                 }
 
                 /// <summary>
@@ -287,16 +234,7 @@ namespace BaseDice
                 /// <param name="inn">The current inning.</param>
                 public int InningScore(int inn)
                 {
-                        if (inn == 0)
-                        {
-                                return this.runs;
-                        }
-                        else if (!this.inningRuns.ContainsKey(inn))
-                        {
-                                return -1;
-                        }
-
-                        return (int)this.inningRuns[inn];
+                        return this.player.InningScore(inn);
                 }
 
                 /// <summary>
@@ -314,12 +252,7 @@ namespace BaseDice
                 /// <returns>The tally.</returns>
                 public string FinalTally()
                 {
-                        return this.runs.ToString() + " run" +
-                                (this.runs == 1 ? string.Empty : "s") + ".  " +
-                                this.hits.ToString() + " hit" +
-                                (this.hits == 1 ? string.Empty : "s") + ".  " +
-                                this.errors.ToString() + " error" +
-                                (this.errors == 1 ? string.Empty : "s") + ".";
+                        return this.player.FinalTally();
                 }
 
                 /// <summary>
@@ -400,22 +333,6 @@ namespace BaseDice
                 }
 
                 /// <summary>
-                /// Counts the runs for the current inning.
-                /// </summary>
-                /// <returns>The runs.</returns>
-                /// <param name="curr">Current inning.</param>
-                private int CurrentRuns(int curr)
-                {
-                        int total = 0;
-                        for (int inn = 1; inn < curr - 1; inn++)
-                        {
-                                total += (int)this.inningRuns[inn + 1];
-                        }
-
-                        return this.runs - total;
-                }
-
-                /// <summary>
                 /// Takes the turns with the point not set.
                 /// </summary>
                 /// <returns>The resulting report.</returns>
@@ -434,7 +351,7 @@ namespace BaseDice
                         {
                                 this.field.AdvanceAll();
                                 this.field.Single();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Advance all bases";
                         }
                         else if (rollTotal == 3)
@@ -449,7 +366,7 @@ namespace BaseDice
                                         report = "Single";
                                 }
 
-                                ++this.hits;
+                                this.player.Hit();
                         }
                         else if (new List<int>() { 4, 5, 9, 10 }.Contains(rollTotal))
                         {
@@ -463,7 +380,7 @@ namespace BaseDice
                                 }
 
                                 this.field.Single();
-                                ++this.hits;
+                                this.player.Hit();
                         }
                         else if (rollTotal == 6 || rollTotal == 8)
                         {
@@ -477,16 +394,16 @@ namespace BaseDice
                                 }
 
                                 this.field.Single();
-                                ++this.hits;
+                                this.player.Hit();
                         }
                         else if (rollTotal == 7)
                         {
-                                ++this.outs;
+                                this.player.Out();
                                 report = "Out";
                         }
                         else if (rollTotal == 11)
                         {
-                                ++this.outs;
+                                this.player.Out();
                                 report = "Non-at-bat out";
                         }
                         else
@@ -522,43 +439,43 @@ namespace BaseDice
                         else if (dieRolls[0] == 5 && dieRolls[1] == 5)
                         {
                                 this.field.Triple();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Triple";
                         }
                         else if (dieRolls[0] == 3 && dieRolls[1] == 3)
                         {
                                 this.field.Error();
-                                ++this.errors;
+                                this.player.Error();
                                 report = "Error";
                         }
                         else if (dieRolls[0] == dieRolls[1])
                         {
                                 this.field.Single();
-                                ++this.errors;
+                                this.player.Error();
                                 report = "Error";
                         }
                         else if (rollTotal == 5)
                         {
                                 this.field.Double();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Double (standard)";
                         }
                         else if (new List<int>() { 4, 6, 10 }.Contains(rollTotal))
                         {
                                 this.field.Single();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Single (standard)";
                         }
                         else if (rollTotal == 8)
                         {
                                 this.field.HomeRun();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Home Run";
                         }
                         else if (rollTotal == 9)
                         {
                                 this.field.Double();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Double (strong)";
                         }
                         else
@@ -590,7 +507,7 @@ namespace BaseDice
                         {
                                 if (this.field.Out(1))
                                 {
-                                        ++this.outs;
+                                        this.player.Out();
                                         report = "Eliminate player on second";
                                 }
                                 else
@@ -602,7 +519,7 @@ namespace BaseDice
                         {
                                 if (this.field.Out(2))
                                 {
-                                        ++this.outs;
+                                        this.player.Out();
                                         report = "Eliminate player on third";
                                 }
                                 else
@@ -612,7 +529,7 @@ namespace BaseDice
                         }
                         else if (new List<int>() { 4, 5, 6, 8, 9, 10 }.Contains(rollTotal))
                         {
-                                ++this.outs;
+                                this.player.Out();
                                 report = "Out";
                         }
                         else if (rollTotal == 7)
@@ -629,7 +546,7 @@ namespace BaseDice
                                 if (this.field.Out(0))
                                 {
                                         report = "Eliminate man on first";
-                                        ++this.outs;
+                                        this.player.Out();
                                 }
                                 else
                                 {
@@ -639,7 +556,7 @@ namespace BaseDice
                         else if (dieRolls[0] == dieRolls[1])
                         {
                                 this.field.Single();
-                                ++this.hits;
+                                this.player.Hit();
                                 report = "Single (strong)";
                         }
                         else
@@ -669,15 +586,6 @@ namespace BaseDice
                         }
 
                         return result;
-                }
-                
-                /// <summary>
-                /// Add a run; use as callback only.
-                /// </summary>
-                private void Run()
-                {
-                        ++this.home;
-                        ++this.runs;
                 }
         }
 }
