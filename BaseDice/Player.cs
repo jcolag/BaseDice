@@ -60,6 +60,18 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Gets the number of hits.
+                /// </summary>
+                /// <value>The hits.</value>
+                public int Hits
+                {
+                        get
+                        {
+                                return this.hits;
+                        }
+                }
+
+                /// <summary>
                 /// Gets the point.
                 /// </summary>
                 /// <value>The point.</value>
@@ -181,6 +193,35 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Adds the inning.
+                /// </summary>
+                /// <param name="inn">The inning.</param>
+                public void AddInning(int inn)
+                {
+                        if (!this.inningRuns.ContainsKey(inn))
+                        {
+                                this.inningRuns.Add(inn, 0);
+                        }
+                }
+
+                /// <summary>
+                /// Adds the runs for the current inning.
+                /// </summary>
+                /// <returns>The inning score.</returns>
+                /// <param name="inn">The inning.</param>
+                public int RunsForInning(int inn)
+                {
+                        if (this.outs > 0)
+                        {
+                                var total = this.CurrentRuns(inn);
+                                this.inningRuns[inn] = total;
+                                return total;
+                        }
+
+                        return 0;
+                }
+
+                /// <summary>
                 /// Record the player's hit.
                 /// </summary>
                 public void Hit()
@@ -195,6 +236,36 @@ namespace BaseDice
                 public int Run()
                 {
                         return ++this.runs;
+                }
+
+                /// <summary>
+                /// Produces the final tally.
+                /// </summary>
+                /// <returns>The tally.</returns>
+                public string FinalTally()
+                {
+                        return this.runs.ToString() + " run" +
+                                (this.runs == 1 ? string.Empty : "s") + ".  " +
+                                this.hits.ToString() + " hit" +
+                                (this.hits == 1 ? string.Empty : "s") + ".  " +
+                                this.errors.ToString() + " error" +
+                                (this.errors == 1 ? string.Empty : "s") + ".";
+                }
+
+                /// <summary>
+                /// Counts the runs for the current inning.
+                /// </summary>
+                /// <returns>The runs.</returns>
+                /// <param name="curr">Current inning.</param>
+                private int CurrentRuns(int curr)
+                {
+                        int total = 0;
+                        for (int inn = 1; inn < curr - 1; inn++)
+                        {
+                                total += (int)this.inningRuns[inn + 1];
+                        }
+
+                        return this.runs - total;
                 }
         }
 }
