@@ -281,7 +281,7 @@ namespace BaseDice
                 }
 
                 /// <summary>
-                /// Innings the score.
+                /// Separates the inning's score from the total.
                 /// </summary>
                 /// <returns>The score.</returns>
                 /// <param name="inn">The current inning.</param>
