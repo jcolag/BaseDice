@@ -164,6 +164,14 @@ namespace BaseDice
                 }
 
                 /// <summary>
+                /// Adds a scoring error.
+                /// </summary>
+                public void Error()
+                {
+                        ++this.errors;
+                }
+
+                /// <summary>
                 /// Player has been caught out.
                 /// </summary>
                 public void Out()
@@ -233,9 +241,29 @@ namespace BaseDice
                 /// Player scores a run.
                 /// </summary>
                 /// <returns>Current score.</returns>
-                public int Run()
+                public int ScoreRun()
                 {
                         return ++this.runs;
+                }
+
+                /// <summary>
+                /// Reports the runs.
+                /// </summary>
+                /// <returns>The runs.</returns>
+                /// <param name="nl">End-of-line string.</param>
+                public string ReportRuns(string nl)
+                {
+                        string runners = string.Empty;
+                        if (this.home > 0)
+                        {
+                                runners = this.home.ToString() + " runner" +
+                                        (this.home == 1 ? string.Empty : "s") +
+                                        " cross" + (this.home == 1 ? "es" : string.Empty) +
+                                        " Home Plate." + nl;
+                                this.home = 0;
+                        }
+
+                        return runners;
                 }
 
                 /// <summary>
@@ -250,6 +278,16 @@ namespace BaseDice
                                 (this.hits == 1 ? string.Empty : "s") + ".  " +
                                 this.errors.ToString() + " error" +
                                 (this.errors == 1 ? string.Empty : "s") + ".";
+                }
+
+                /// <summary>
+                /// Add a run.
+                /// </summary>
+                /// <remarks>Use as an Action callback only.</remarks>
+                public void Run()
+                {
+                        ++this.home;
+                        ++this.runs;
                 }
 
                 /// <summary>
