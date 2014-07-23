@@ -194,7 +194,6 @@ namespace BaseDice
                         }
 
                         this.player.AddInning(curr);
-                        this.player.RunsForInning(curr);
                         return runners +
                                 "Rolled " + DiceTalk(rollTotal, this.roll[0] == this.roll[1]) + ", " + report;
                 }

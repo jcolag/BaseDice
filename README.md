@@ -45,7 +45,7 @@ Future
 
 Among other things...
 
- - [ ] There is an intermittent bug on the scoreboard where runs earned at the end of one inning sometimes show in both that inning and the next.
+ - [X] There is an intermittent bug on the scoreboard where runs earned at the end of one inning sometimes show in both that inning and the next.  (_Score now updates in a single place, which should have happened in the first place._)
 
  - [X] Right now, this is only a single-player story, by design.  It shouldn't be too hard, though output that makes sense could be.  Arguably, given the format, more than two players could even work.  Massively multiplayer online baseball...?  (_The architecture no longer requires it._)
 
@@ -63,11 +63,11 @@ Among other things...
 
  - [ ] Trying to add music to the game via SoundCloud's API turned out to be non-trivial due to [CORS](https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing) restrictions and [XSP](https://en.wikipedia.org/wiki/XSP_%28software%29)'s low-end architecture.  Trying to install an up-to-date Mono on Apache turned out to be...non-trivial, as well.  The most basic code is in-place if anybody wants to test and expand it, and I have a list of tracks that seem appropriate, but for now, this will have to wait.
 
-- [ ] Now that we have player files, the bonuses should perhaps be encrypted with "umpires"' private keys on a per-bonus basis.
+ - [ ] Now that we have player files, the bonuses should perhaps be encrypted with "umpires"' private keys on a per-bonus basis.
 
-- [ ] The game might also consider awarding bonuses based on performance.
+ - [ ] The game might also consider awarding bonuses based on performance.
 
-- [ ] The game has become almost entirely baseball.  A gambling mechanic that combines both the score and the craps side of the game might rebalance it.
+ - [ ] The game has become almost entirely baseball.  A gambling mechanic that combines both the score and the craps side of the game might rebalance it.
 
 Credits
 -------

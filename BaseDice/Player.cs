@@ -53,6 +53,11 @@ namespace BaseDice
                 private int home;
 
                 /// <summary>
+                /// The most recent known inning.
+                /// </summary>
+                private int lastInning;
+
+                /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Player"/> class.
                 /// </summary>
                 public Player()
@@ -126,7 +131,8 @@ namespace BaseDice
                 /// <param name="outsPerInning">Outs per inning.</param>
                 public int CurrentInning(int outsPerInning)
                 {
-                        return (this.outs / outsPerInning) + 1;
+                        this.lastInning = (this.outs / outsPerInning) + 1;
+                        return this.lastInning;
                 }
 
                 /// <summary>
@@ -213,23 +219,6 @@ namespace BaseDice
                 }
 
                 /// <summary>
-                /// Adds the runs for the current inning.
-                /// </summary>
-                /// <returns>The inning score.</returns>
-                /// <param name="inn">The inning.</param>
-                public int RunsForInning(int inn)
-                {
-                        if (this.outs > 0)
-                        {
-                                var total = this.CurrentRuns(inn);
-                                this.inningRuns[inn] = total;
-                                return total;
-                        }
-
-                        return 0;
-                }
-
-                /// <summary>
                 /// Record the player's hit.
                 /// </summary>
                 public void Hit()
@@ -293,8 +282,26 @@ namespace BaseDice
                 /// <remarks>Use as an Action callback only.</remarks>
                 public void Run()
                 {
+                        int inn = -1;
+
+                        try
+                        {
+                                inn = (int)this.inningRuns[this.lastInning];
+                        }
+                        catch (InvalidCastException)
+                        {
+                        }
+
                         ++this.home;
                         ++this.runs;
+
+                        if (inn < 0)
+                        {
+                                return;
+                        }
+
+                        ++inn;
+                        this.inningRuns[this.lastInning] = inn;
                 }
         }
 }
