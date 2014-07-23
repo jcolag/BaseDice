@@ -65,9 +65,11 @@ Among other things...
 
  - [ ] Now that we have player files, the bonuses should perhaps be encrypted with "umpires"' private keys on a per-bonus basis.
 
- - [ ] The game might also consider awarding bonuses based on performance.
-
  - [ ] The game has become almost entirely baseball.  A gambling mechanic that combines both the score and the craps side of the game might rebalance it.
+
+ - [ ] More bonuses.  Just stealing bases and walking batters is a bit flat, but they're very easy to implement.  The only other option I can see is, potentially, rolling the Point.
+
+ - [ ] The game might also consider awarding bonuses based on performance.  Maybe linked to gambling.  Winning money for other players?
 
 Credits
 -------
