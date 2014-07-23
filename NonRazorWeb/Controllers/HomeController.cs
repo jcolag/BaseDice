@@ -230,6 +230,12 @@ namespace NonRazorWeb.Controllers
                         catch (InvalidCastException)
                         {
                         }
+                        catch (ArgumentNullException)
+                        {
+                        }
+                        catch (NullReferenceException)
+                        {
+                        }
 
                         string html = (string)session["Html"];
                         string s = string.Empty;
