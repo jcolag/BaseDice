@@ -238,15 +238,6 @@ namespace BaseDice
                 }
 
                 /// <summary>
-                /// Player scores a run.
-                /// </summary>
-                /// <returns>Current score.</returns>
-                public int ScoreRun()
-                {
-                        return ++this.runs;
-                }
-
-                /// <summary>
                 /// Reports the runs.
                 /// </summary>
                 /// <returns>The runs.</returns>

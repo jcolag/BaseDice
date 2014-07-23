@@ -222,7 +222,15 @@ namespace NonRazorWeb.Controllers
                         ViewDataDictionary viewdata = this.ViewData;
                         Game g = (Game)session["Game"];
                         System.Collections.ObjectModel.Collection<int> roll;
-                        bool done = (bool)session["Done"];
+                        bool done = false;
+                        try
+                        {
+                                done = (bool)session["Done"];
+                        }
+                        catch (InvalidCastException)
+                        {
+                        }
+
                         string html = (string)session["Html"];
                         string s = string.Empty;
                         string message = string.Empty;
