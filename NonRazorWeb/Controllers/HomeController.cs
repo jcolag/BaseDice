@@ -79,7 +79,7 @@ namespace NonRazorWeb.Controllers
                 {
                         HttpSessionStateBase session = this.Session;
                         ViewDataDictionary viewdata = this.ViewData;
-                        Game game = (Game)session["Game"];
+                        Game game;
                         int runs;
 
                         if (session == null)
@@ -87,6 +87,7 @@ namespace NonRazorWeb.Controllers
                                 throw new ObjectDisposedException(GetType().Name);
                         }
 
+                        game = (Game)session["Game"];
                         string message = this.ProcessTurn();
                         string html = (string)session["Html"];
 
@@ -223,6 +224,12 @@ namespace NonRazorWeb.Controllers
                         Game g = (Game)session["Game"];
                         System.Collections.ObjectModel.Collection<int> roll;
                         bool done = false;
+
+                        if (g == null)
+                        {
+                                return "Game called on account of rain!";
+                        }
+
                         try
                         {
                                 done = (bool)session["Done"];
@@ -283,6 +290,11 @@ namespace NonRazorWeb.Controllers
                         if (game == null)
                         {
                                 g = (Game)session["Game"];
+                        }
+
+                        if (g == null)
+                        {
+                                return string.Empty;
                         }
 
                         if (session["Done"] != null && (bool)session["Done"] != false)
