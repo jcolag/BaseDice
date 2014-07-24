@@ -252,12 +252,9 @@ namespace BaseDice
                 /// <returns>The tally.</returns>
                 public string FinalTally()
                 {
-                        return this.runs.ToString() + " run" +
-                                (this.runs == 1 ? string.Empty : "s") + ".  " +
-                                this.hits.ToString() + " hit" +
-                                (this.hits == 1 ? string.Empty : "s") + ".  " +
-                                this.errors.ToString() + " error" +
-                                (this.errors == 1 ? string.Empty : "s") + ".";
+                        return this.ReportValue(this.runs, "run", ".  ") +
+                                this.ReportValue(this.outs, "out", ".  ") +
+                                this.ReportValue(this.errors, "error", ".");
                 }
 
                 /// <summary>
@@ -302,6 +299,20 @@ namespace BaseDice
 
                         ++inn;
                         this.inningRuns[this.lastInning] = inn;
+                }
+
+                /// <summary>
+                /// Pluralize the specified number, noun and end.
+                /// </summary>
+                /// <param name="number">The object count.</param>
+                /// <param name="noun">The noun.</param>
+                /// <param name="end">The string ending.</param>
+                /// <returns>The report string with the noun pluralized.</returns>
+                /// <remarks>Currently only need to pluralize with 's'.</remarks>
+                private string ReportValue(int number, string noun, string end)
+                {
+                        return number.ToString() + " " + noun +
+                                (number == 1 ? string.Empty : "s") + end;
                 }
         }
 }
