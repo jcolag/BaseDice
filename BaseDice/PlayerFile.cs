@@ -15,6 +15,11 @@ namespace BaseDice
         public class PlayerFile
         {
                 /// <summary>
+                /// The name of the player.
+                /// </summary>
+                private string playerName = "Player";
+
+                /// <summary>
                 /// The player's bonuses.
                 /// </summary>
                 private List<PlayerBoost> bonuses = new List<PlayerBoost>();
@@ -31,6 +36,13 @@ namespace BaseDice
                         }
 
                         var doc = (XmlDocument)xml;
+                        XmlNodeList playerList = doc.GetElementsByTagName("Player");
+                        foreach (XmlNode player in playerList)
+                        {
+                                XmlAttribute attr = player.Attributes["Name"];
+                                this.playerName = attr.InnerText;
+                        }
+
                         XmlNodeList bonusList = doc.GetElementsByTagName("Bonus");
                         foreach (XmlNode bonus in bonusList)
                         {
@@ -69,6 +81,18 @@ namespace BaseDice
                         get
                         {
                                 return new Collection<PlayerBoost>(this.bonuses);
+                        }
+                }
+
+                /// <summary>
+                /// Gets the name of the player.
+                /// </summary>
+                /// <value>The name of the player.</value>
+                public string PlayerName
+                {
+                        get
+                        {
+                                return this.playerName;
                         }
                 }
 

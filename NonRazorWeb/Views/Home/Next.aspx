@@ -44,7 +44,7 @@
 		        <th>#</th>
 		    </tr>
 		    <tr>
-				<th>Player</th>
+				<th id="player_name"><%= ViewData["Player_Name"] %></th>
 				<td id="inning_1"><%= ViewData["Inning_1"] %></td>
 				<td id="inning_2"><%= ViewData["Inning_2"] %></td>
 				<td id="inning_3"><%= ViewData["Inning_3"] %></td>

@@ -58,6 +58,11 @@ namespace BaseDice
                 private int lastInning;
 
                 /// <summary>
+                /// The player's name.
+                /// </summary>
+                private string name = "Player";
+
+                /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Player"/> class.
                 /// </summary>
                 public Player()
@@ -85,6 +90,22 @@ namespace BaseDice
                         get
                         {
                                 return this.point;
+                        }
+                }
+
+                /// <summary>
+                /// Gets or sets the name.
+                /// </summary>
+                /// <value>The name.</value>
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
+                        set
+                        {
+                                this.name = value;
                         }
                 }
 

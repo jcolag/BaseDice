@@ -62,6 +62,18 @@ namespace BaseDice
                         this.field = new Field(this.player.Run);
                 }
 
+                public string Name
+                {
+                        get
+                        {
+                                return this.player.Name;
+                        }
+                        set
+                        {
+                                this.player.Name = value;
+                        }
+                }
+
                 /// <summary>
                 /// Return this instance's diamond code.
                 /// </summary>

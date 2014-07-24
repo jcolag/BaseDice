@@ -64,7 +64,13 @@ namespace NonRazorWeb.Controllers
                         {
                                 var document = new System.Xml.XmlDocument();
                                 document.Load(file.InputStream);
-                                session["Player"] = new PlayerFile(document);
+                                var pfile = new PlayerFile(document);
+                                session["Player"] = pfile;
+                                if (session["Game"] != null)
+                                {
+                                        Game g = (Game)session["Game"];
+                                        g.Name = pfile.PlayerName;
+                                }
                         }
 
                         return this.RedirectToAction("Next");
@@ -94,7 +100,7 @@ namespace NonRazorWeb.Controllers
                         viewdata["History"] = html;
                         message += HomeController.BreakPadding(message, 8);
                         viewdata["Message"] = message;
-
+                        viewdata["Player_Name"] = game.Name;
                         for (int i = 0; i <= 9; i++)
                         {
                                 runs = game.InningScore(i);
