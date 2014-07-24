@@ -40,6 +40,17 @@ Obviously, that needs testing.
 
 At this time, I have not been able to get a viable, modern ASP.NET environment under Apache on Ubuntu.  IIS would probably be better, but is not on hand.
 
+Versions
+--------
+
+In case it's unclear, there are two versions of BaseDice built in this solution.
+
+ - A console version with no interactivity.
+
+ - An ASP.NET site that uses the console version as a library.
+
+I may add more, now that the project is split.
+
 Future
 ------
 
@@ -82,7 +93,7 @@ The fonts, to the extent they're interesting, are [Playball](https://www.google.
 
 The dynamic page updates are handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.
 
-###Music (Future Credits)###
+###Music (_Future_ Credits)###
 
 As mentioned in the to-dos, a nice touch would be background music, which appears possible through [SoundCloud](https://soundcloud.com/) assuming the CORS issue can be overcome.  On the chance anybody wants to tinker, the tracks I found with a baseball tag that seemed to be high-quality (whether or not I actually liked them) include, in no particular order:
 
@@ -95,4 +106,3 @@ As mentioned in the to-dos, a nice touch would be background music, which appear
 - [Baseball](https://soundcloud.com/acloudintrousers/baseball)
 
 The other criteria was what you might consider an All-Ages rating.  Profanity disqualified quite a few.  Hopefully, none slipped into this batch.
-
