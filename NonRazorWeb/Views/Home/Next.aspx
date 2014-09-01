@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage" MasterPageFile="~/Views/Shared/BaseDice.master" %>
 <asp:Content ContentPlaceHolderID="Scripts" ID="Scripts" runat="server">
 	<script src="/Scripts/comm.js"></script>
+	<script src="/Scripts/util.js"></script>
 	<!--
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
 	-->
