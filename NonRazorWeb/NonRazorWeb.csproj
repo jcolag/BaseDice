@@ -118,4 +118,30 @@
       <Name>BaseDice</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\cheer-01.mp3" />
+    <None Include="Content\cheer-01.ogg" />
+    <None Include="Content\hit-01.mp3" />
+    <None Include="Content\hit-01.ogg" />
+    <None Include="Content\hit-02.mp3" />
+    <None Include="Content\hit-02.ogg" />
+    <None Include="Content\hit-03.mp3" />
+    <None Include="Content\hit-03.ogg" />
+    <None Include="Content\hit-04.mp3" />
+    <None Include="Content\hit-04.ogg" />
+    <None Include="Content\hit-cheer-01.mp3" />
+    <None Include="Content\hit-cheer-01.ogg" />
+    <None Include="Content\swoosh-01.mp3" />
+    <None Include="Content\swoosh-01.ogg" />
+    <None Include="Content\swoosh-02.mp3" />
+    <None Include="Content\swoosh-02.ogg" />
+    <None Include="Content\swoosh-03.mp3" />
+    <None Include="Content\swoosh-03.ogg" />
+    <None Include="Content\swoosh-04.mp3" />
+    <None Include="Content\swoosh-04.ogg" />
+    <None Include="Content\swoosh-05.mp3" />
+    <None Include="Content\swoosh-05.ogg" />
+    <None Include="Content\swoosh-06.mp3" />
+    <None Include="Content\swoosh-06.ogg" />
+  </ItemGroup>
 </Project>

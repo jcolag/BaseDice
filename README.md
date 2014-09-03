@@ -93,6 +93,26 @@ The fonts, to the extent they're interesting, are [Playball](https://www.google.
 
 The dynamic page updates are handled through [jQuery](https://jquery.com/), but don't blame them for anything weird I have done.
 
+###Sounds###
+
+The following sounds are used in the game:
+
+ - [fast-swing-air-woosh](https://www.freesound.org/people/CosmicEmbers/sounds/160756/) by [CosmicEmbers](https://www.freesound.org/people/CosmicEmbers/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+ - [Swoosh](https://www.freesound.org/people/pasdepoisson/sounds/201216/) by [pasdepoisson](https://www.freesound.org/people/pasdepoisson/), available under a [Creative Commons Zero](http://creativecommons.org/publicdomain/zero/1.0/) license.
+
+ - [Swing1](https://www.freesound.org/people/Taira%20Komori/sounds/215025/) by [Taira Komori](https://www.freesound.org/people/Taira%20Komori/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+ - [Hitting baseball w. wooden bat](https://www.freesound.org/people/CGEffex/sounds/93136/) by [CGEffex](https://www.freesound.org/people/CGEffex/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+ - [Baseball Bat Hit 1](https://www.freesound.org/people/CTCollab/sounds/223609/) by [CTCollab](https://www.freesound.org/people/CTCollab/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+ - [nagoya-baseballregion_23](https://www.freesound.org/people/Tritus/sounds/197285/) by [Tritus](https://www.freesound.org/people/Tritus/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+ - [BaseballHitAndCrowdCheer](https://www.freesound.org/people/AmishRob/sounds/214989/) by [AmishRob](https://www.freesound.org/people/AmishRob/), available under a [Creative Commons Attribution](http://creativecommons.org/licenses/by/3.0/) license.
+
+They either are or will be in use.
+
 ###Music (_Future_ Credits)###
 
 As mentioned in the to-dos, a nice touch would be background music, which appears possible through [SoundCloud](https://soundcloud.com/) assuming the CORS issue can be overcome.  On the chance anybody wants to tinker, the tracks I found with a baseball tag that seemed to be high-quality (whether or not I actually liked them) include, in no particular order:
