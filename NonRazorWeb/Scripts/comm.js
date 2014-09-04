@@ -25,6 +25,10 @@ function getNextRoll() {
 	$("#Result").prepend(flash);
 	$('.flash').show().fadeOut('slow');
 	setScore();
+	URL = "/Home/Sound";
+	$.get(URL, function(data) {
+	    playSound(data);
+	});
 }
 function setBonuses () {
 	URL = "/Home/Bonuses/";

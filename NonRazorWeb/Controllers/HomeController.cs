@@ -193,6 +193,18 @@ namespace NonRazorWeb.Controllers
                 }
 
                 /// <summary>
+                /// Get the sound for this past at-bat.
+                /// </summary>
+                /// <returns>The sound partial.</returns>
+                [AcceptVerbs(HttpVerbs.Get)]
+                public ActionResult Sound()
+                {
+                        var g = (Game)this.Session["Game"];
+                        this.Response.Write(g.Sound);
+                        return null;
+                }
+
+                /// <summary>
                 /// Adds padding to the line breaks.
                 /// </summary>
                 /// <returns>The padding.</returns>

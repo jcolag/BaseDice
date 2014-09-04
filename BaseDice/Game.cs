@@ -49,6 +49,11 @@ namespace BaseDice
                 private List<int> roll;
 
                 /// <summary>
+                /// The sound.
+                /// </summary>
+                private string sound = string.Empty;
+
+                /// <summary>
                 /// Initializes a new instance of the <see cref="BaseDice.Game"/> class.
                 /// </summary>
                 public Game()
@@ -71,6 +76,18 @@ namespace BaseDice
                         set
                         {
                                 this.player.Name = value;
+                        }
+                }
+
+                /// <summary>
+                /// Gets the sound.
+                /// </summary>
+                /// <value>The sound.</value>
+                public string Sound
+                {
+                        get
+                        {
+                                return this.sound;
                         }
                 }
 
@@ -106,6 +123,7 @@ namespace BaseDice
                         string nl = Environment.NewLine;
                         bool inning = false;
 
+                        this.sound = string.Empty;
                         this.roll = this.Roll();
                         foreach (int val in this.roll)
                         {
@@ -363,6 +381,7 @@ namespace BaseDice
                                 this.field.Single();
                                 this.player.Hit();
                                 report = "Advance all bases";
+                                this.sound = "hit-01";
                         }
                         else if (rollTotal == 3)
                         {
@@ -370,10 +389,12 @@ namespace BaseDice
                                 if (this.field.Advance(2))
                                 {
                                         report = "Advance to home";
+                                        this.sound = "cheer-01";
                                 }
                                 else
                                 {
                                         report = "Single";
+                                        this.sound = "hit-02";
                                 }
 
                                 this.player.Hit();
@@ -391,6 +412,7 @@ namespace BaseDice
 
                                 this.field.Single();
                                 this.player.Hit();
+                                this.sound = "hit-03";
                         }
                         else if (rollTotal == 6 || rollTotal == 8)
                         {
@@ -403,12 +425,14 @@ namespace BaseDice
                                         report = "Single";
                                 }
 
+                                this.sound = "hit-04";
                                 this.field.Single();
                                 this.player.Hit();
                         }
                         else if (rollTotal == 7)
                         {
                                 this.player.Out();
+                                this.sound = "swoosh-01";
                                 report = "Out";
                         }
                         else if (rollTotal == 11)
@@ -450,6 +474,7 @@ namespace BaseDice
                         {
                                 this.field.Triple();
                                 this.player.Hit();
+                                this.sound = "hit-01";
                                 report = "Triple";
                         }
                         else if (dieRolls[0] == 3 && dieRolls[1] == 3)
@@ -468,24 +493,28 @@ namespace BaseDice
                         {
                                 this.field.Double();
                                 this.player.Hit();
+                                this.sound = "hit-02";
                                 report = "Double (standard)";
                         }
                         else if (new List<int>() { 4, 6, 10 }.Contains(rollTotal))
                         {
                                 this.field.Single();
                                 this.player.Hit();
+                                this.sound = "hit-03";
                                 report = "Single (standard)";
                         }
                         else if (rollTotal == 8)
                         {
                                 this.field.HomeRun();
                                 this.player.Hit();
+                                this.sound = "hit-cheer-01";
                                 report = "Home Run";
                         }
                         else if (rollTotal == 9)
                         {
                                 this.field.Double();
                                 this.player.Hit();
+                                this.sound = "hit-cheer-01";
                                 report = "Double (strong)";
                         }
                         else
@@ -522,6 +551,7 @@ namespace BaseDice
                                 }
                                 else
                                 {
+                                        this.sound = "swoosh-05";
                                         report = "Thrown to second";
                                 }
                         }
@@ -534,16 +564,19 @@ namespace BaseDice
                                 }
                                 else
                                 {
+                                        this.sound = "swoosh-04";
                                         report = "Thrown to third";
                                 }
                         }
                         else if (new List<int>() { 4, 5, 6, 8, 9, 10 }.Contains(rollTotal))
                         {
                                 this.player.Out();
+                                this.sound = "swoosh-02";
                                 report = "Out";
                         }
                         else if (rollTotal == 7)
                         {
+                                this.sound = "swoosh-03";
                                 report = "Roll again";
                         }
                         else if (rollTotal == 11)
@@ -560,6 +593,7 @@ namespace BaseDice
                                 }
                                 else
                                 {
+                                        this.sound = "swoosh-04";
                                         report = "Thrown to first";
                                 }
                         }
@@ -567,6 +601,7 @@ namespace BaseDice
                         {
                                 this.field.Single();
                                 this.player.Hit();
+                                this.sound = "hit-04";
                                 report = "Single (strong)";
                         }
                         else

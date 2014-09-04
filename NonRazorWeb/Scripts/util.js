@@ -1,5 +1,8 @@
 ﻿function playSound(name) {
 	var extension;
+	if (name === "") {
+	    return;
+	}
 	if ((new Audio()).canPlayType("audio/ogg; codecs=vorbis")) {
 		extension = "ogg";
 	} else if ((new Audio()).canPlayType("audio/mp3; codecs=vorbis")) {
