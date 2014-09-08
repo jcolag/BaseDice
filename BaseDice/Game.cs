@@ -67,12 +67,17 @@ namespace BaseDice
                         this.field = new Field(this.player.Run);
                 }
 
+                /// <summary>
+                /// Gets or sets the player's name.
+                /// </summary>
+                /// <value>The name.</value>
                 public string Name
                 {
                         get
                         {
                                 return this.player.Name;
                         }
+
                         set
                         {
                                 this.player.Name = value;
