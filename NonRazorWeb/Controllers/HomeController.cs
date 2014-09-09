@@ -23,6 +23,36 @@ namespace NonRazorWeb.Controllers
         public class HomeController : Controller
         {
                 /// <summary>
+                /// Options for the weather.
+                /// </summary>
+                private static string[] weather =
+                {
+                        "rain",
+                        "graupel",
+                        "hail",
+                        "sleet",
+                        "freezing rain",
+                        "snow",
+                        "smog",
+                        "rain and snow mix",
+                        "lightning",
+                        "high winds",
+                        "squall line",
+                        "blizzard",
+                        "downburst",
+                        "dust storm",
+                        "extratropical cyclone",
+                        "ice storm",
+                        "firestorm",
+                        "tornado",
+                        "tropical cyclone",
+                        "waterspout",
+                        "non-convective flooding",
+                        "dark of night",
+                        "rain of toads"
+                };
+
+                /// <summary>
                 /// Controller for the front page.
                 /// </summary>
                 /// <returns>The view.</returns>
@@ -245,7 +275,25 @@ namespace NonRazorWeb.Controllers
 
                         if (g == null)
                         {
-                                return "Game called on account of rain!";
+                                string weather = (string)session["Weather"];
+                                if (string.IsNullOrWhiteSpace(weather))
+                                {
+                                        double max = Math.Pow(2, HomeController.weather.Length);
+                                        var rand = new Random();
+                                        int value = rand.Next(Convert.ToInt32(max));
+                                        int index = 0;
+                                        while (value > 1)
+                                        {
+                                                ++index;
+                                                value /= 2;
+                                        }
+
+                                        index = HomeController.weather.Length - index - 1;
+                                        weather = HomeController.weather[index];
+                                        session.Add("Weather", weather);
+                                }
+
+                                return "Game called on account of " + weather + "!";
                         }
 
                         try
